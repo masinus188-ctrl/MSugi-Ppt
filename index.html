@@ -1,0 +1,1533 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Slide Master — Permainan Belajar PowerPoint</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f7f5f2; --bg2:#efe9e2; --surf:#ffffff; --surf2:#faf6f1;
+  --ink:#1a1512; --mut:#6b5f57; --line:#e6ddd2;
+  --brand:#c8500f; --brand-ink:#ffffff; --brand-soft:#fbe6d7;
+  --acc:#1c8a52; --acc-ink:#ffffff; --acc-soft:#dcf0e4;
+  --gold:#b4790c; --gold-soft:#fbeed2;
+  --bad:#b3261e; --bad-soft:#fbe3e0;
+  --lock:#a89a8d;
+  --shadow:0 1px 2px rgba(26,21,18,.06), 0 8px 24px -12px rgba(26,21,18,.25);
+  --r:16px;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#120e0b; --bg2:#1a1410; --surf:#1e1712; --surf2:#241c16;
+    --ink:#f2ece5; --mut:#a89a8d; --line:#332820;
+    --brand:#ff8a4c; --brand-ink:#1a0f06; --brand-soft:#3a230f82;
+    --acc:#3fcf8a; --acc-ink:#07160e; --acc-soft:#16302282;
+    --gold:#e8b350; --gold-soft:#3a2d0f;
+    --bad:#ff7a6e; --bad-soft:#3a1a16;
+    --lock:#6b5f57;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 30px -14px rgba(0,0,0,.8);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#120e0b; --bg2:#1a1410; --surf:#1e1712; --surf2:#241c16;
+  --ink:#f2ece5; --mut:#a89a8d; --line:#332820;
+  --brand:#ff8a4c; --brand-ink:#1a0f06; --brand-soft:#3a230f82;
+  --acc:#3fcf8a; --acc-ink:#07160e; --acc-soft:#16302282;
+  --gold:#e8b350; --gold-soft:#3a2d0f;
+  --bad:#ff7a6e; --bad-soft:#3a1a16;
+  --lock:#6b5f57;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 30px -14px rgba(0,0,0,.8);
+}
+
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  background:var(--bg);
+  color:var(--ink);
+  font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  font-size:16px; line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,h4,.disp{font-family:Outfit, Inter, system-ui, sans-serif; font-weight:800; letter-spacing:-.02em; margin:0}
+code,.mono{font-family:"JetBrains Mono", ui-monospace, "SF Mono", Consolas, monospace}
+button{font:inherit;color:inherit}
+.wrap{max-width:1000px;margin:0 auto;padding:0 18px}
+
+/* ---------- Topbar ---------- */
+.top{position:sticky;top:0;z-index:40;background:color-mix(in srgb, var(--bg) 88%, transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;align-items:center;gap:12px;height:62px}
+.brand{display:flex;align-items:center;gap:10px;cursor:pointer;background:none;border:0;padding:0}
+.logo{width:34px;height:34px;border-radius:9px;background:var(--brand);color:var(--brand-ink);display:grid;place-items:center;font-family:Outfit;font-weight:800;font-size:19px;flex:none}
+.brand b{font-family:Outfit;font-weight:800;font-size:18px;letter-spacing:-.03em}
+.brand span{display:block;font-size:11px;color:var(--mut);letter-spacing:.08em;text-transform:uppercase;font-weight:600;line-height:1}
+.spacer{flex:1}
+.chip{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);background:var(--surf);border-radius:999px;padding:6px 12px;font-size:13px;font-weight:600;white-space:nowrap}
+.chip.gold{color:var(--gold);border-color:color-mix(in srgb,var(--gold) 35%,var(--line));background:var(--gold-soft)}
+.theme-group{display:inline-flex;align-items:center;gap:6px;padding:4px;border:1px solid var(--line);background:var(--surf);border-radius:999px;box-shadow:var(--shadow)}
+.theme-btn{width:32px;height:32px;border:1px solid transparent;border-radius:50%;background:transparent;color:var(--ink);cursor:pointer;display:grid;place-items:center;font-size:15px;transition:.15s ease}
+.theme-btn:hover{border-color:var(--brand);background:var(--surf2);transform:translateY(-1px)}
+.theme-btn.active{background:var(--brand-soft);border-color:var(--brand);box-shadow:inset 0 0 0 1px color-mix(in srgb, var(--brand) 28%, transparent)}
+.iconbtn{width:36px;height:36px;border-radius:10px;border:1px solid var(--line);background:var(--surf);cursor:pointer;display:grid;place-items:center;font-size:15px}
+.iconbtn:hover{border-color:var(--brand)}
+
+/* ---------- Generic ---------- */
+.card{background:var(--surf);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow)}
+.btn{border:1px solid var(--line);background:var(--surf);border-radius:12px;padding:11px 18px;font-weight:600;cursor:pointer;transition:.15s;font-size:15px}
+.btn:hover{border-color:var(--brand);transform:translateY(-1px)}
+.btn.primary{background:var(--brand);color:var(--brand-ink);border-color:var(--brand)}
+.btn.primary:hover{filter:brightness(1.07)}
+.btn.big{padding:14px 26px;font-size:16px;border-radius:14px}
+.btn:disabled{opacity:.45;cursor:not-allowed;transform:none}
+.muted{color:var(--mut)}
+.sm{font-size:13px}
+.center{text-align:center}
+section{display:none}
+section.on{display:block;animation:fade .28s ease}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+code{background:var(--surf2);border:1px solid var(--line);border-radius:6px;padding:1px 6px;font-size:.88em;white-space:nowrap}
+
+/* ---------- Home ---------- */
+.hero{display:flex;gap:26px;align-items:center;padding:26px;margin:24px 0 20px;flex-wrap:wrap}
+.hero h1{font-size:30px;line-height:1.12;margin-bottom:8px}
+.hero p{margin:0;color:var(--mut);font-size:15px;max-width:52ch}
+.ring{flex:none;width:112px;height:112px;position:relative}
+.ring svg{transform:rotate(-90deg)}
+.ring b{position:absolute;inset:0;display:grid;place-items:center;font-family:Outfit;font-size:24px;font-weight:800}
+.statrow{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+.sectitle{display:flex;align-items:baseline;gap:10px;margin:30px 0 14px}
+.sectitle h2{font-size:20px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px}
+.lvl{padding:18px;text-align:left;cursor:pointer;border:1px solid var(--line);background:var(--surf);border-radius:var(--r);transition:.18s;position:relative;overflow:hidden;box-shadow:var(--shadow)}
+.lvl:hover:not(.locked){transform:translateY(-3px);border-color:var(--brand)}
+.lvl.locked{cursor:not-allowed;opacity:.62}
+.lvl .num{font-family:Outfit;font-weight:800;font-size:12px;letter-spacing:.14em;color:var(--mut);text-transform:uppercase}
+.lvl h3{font-size:17px;margin:6px 0 6px}
+.lvl p{margin:0;font-size:13.5px;color:var(--mut);line-height:1.45}
+.lvl .ico{position:absolute;right:14px;top:14px;font-size:20px;opacity:.5}
+.stars{margin-top:12px;font-size:15px;letter-spacing:2px;color:var(--gold)}
+.stars .off{color:var(--lock)}
+.badge-done{position:absolute;right:0;top:0;background:var(--acc);color:var(--acc-ink);font-size:11px;font-weight:700;padding:3px 10px;border-bottom-left-radius:10px}
+.tagrow{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px}
+.tag{font-size:11px;font-weight:600;background:var(--surf2);border:1px solid var(--line);border-radius:6px;padding:2px 7px;font-family:"JetBrains Mono",monospace}
+
+.exam-cta{margin-top:14px;padding:24px;display:flex;gap:20px;align-items:center;flex-wrap:wrap;border:1px dashed var(--line);border-radius:var(--r);background:linear-gradient(160deg,var(--surf),var(--surf2))}
+.exam-cta.ready{border:1px solid var(--gold);background:linear-gradient(160deg,var(--gold-soft),var(--surf))}
+.exam-cta h3{font-size:20px;margin-bottom:6px}
+.exam-cta p{margin:0;color:var(--mut);font-size:14px;max-width:50ch}
+.trophy{font-size:44px;flex:none}
+
+.badges{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
+.bdg{padding:14px;border-radius:12px;border:1px solid var(--line);background:var(--surf);text-align:center}
+.bdg.off{opacity:.4}
+.bdg .e{font-size:26px}
+.bdg b{display:block;font-size:13px;margin-top:4px;font-family:Outfit}
+.bdg small{color:var(--mut);font-size:11.5px;line-height:1.3;display:block;margin-top:2px}
+
+/* ---------- Level intro ---------- */
+.intro{padding:26px;margin:24px 0}
+.intro h2{font-size:26px;margin-bottom:6px}
+.notes{margin:18px 0 0;display:grid;gap:10px}
+.note{display:flex;gap:12px;align-items:flex-start;padding:12px 14px;background:var(--surf2);border:1px solid var(--line);border-radius:12px}
+.note .f{font-family:"JetBrains Mono",monospace;font-size:13px;font-weight:700;color:var(--brand);white-space:nowrap;flex:none;min-width:150px}
+.note .d{font-size:13.5px;color:var(--mut)}
+@media (max-width:620px){.note{flex-direction:column;gap:4px}.note .f{min-width:0}}
+
+/* ---------- Quiz ---------- */
+.qbar{display:flex;align-items:center;gap:12px;margin:22px 0 4px}
+.pbar{flex:1;height:10px;background:var(--bg2);border-radius:99px;overflow:hidden;border:1px solid var(--line)}
+.pbar i{display:block;height:100%;background:var(--brand);border-radius:99px;transition:width .35s ease}
+.hearts{font-size:15px;letter-spacing:1px;white-space:nowrap}
+.hearts .off{opacity:.22}
+.qcard{padding:24px;margin:14px 0}
+.qmeta{display:flex;justify-content:space-between;align-items:center;font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--mut)}
+.qtext{font-family:Outfit;font-weight:600;font-size:20px;line-height:1.4;margin:10px 0 16px;letter-spacing:-.01em}
+.opts{display:grid;gap:9px}
+.opt{display:flex;gap:11px;align-items:center;text-align:left;width:100%;padding:13px 15px;border:1.5px solid var(--line);background:var(--surf);border-radius:12px;cursor:pointer;transition:.13s;font-size:15px}
+.opt:hover:not(:disabled){border-color:var(--brand);background:var(--surf2)}
+.opt .k{width:24px;height:24px;flex:none;border-radius:7px;background:var(--surf2);border:1px solid var(--line);display:grid;place-items:center;font-size:12px;font-weight:700}
+.opt.correct{border-color:var(--acc);background:var(--acc-soft)}
+.opt.correct .k{background:var(--acc);color:var(--acc-ink);border-color:var(--acc)}
+.opt.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.opt.wrong .k{background:var(--bad);color:#fff;border-color:var(--bad)}
+.opt:disabled{cursor:default}
+.opt.picked{outline:2px solid var(--brand);outline-offset:1px}
+.fill{display:flex;gap:8px;flex-wrap:wrap}
+.fill input{flex:1;min-width:220px;font-family:"JetBrains Mono",monospace;font-size:15px;padding:13px 14px;border-radius:12px;border:1.5px solid var(--line);background:var(--surf2);color:var(--ink)}
+.fill input:focus{outline:none;border-color:var(--brand)}
+.keys{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+.keys button{font-family:"JetBrains Mono",monospace;font-size:13px;font-weight:700;padding:6px 12px;border-radius:9px;border:1px solid var(--line);background:var(--surf2);cursor:pointer;min-width:38px}
+.keys button:hover{border-color:var(--brand);color:var(--brand)}
+.hintbox{margin-top:12px;font-size:13.5px;color:var(--mut);display:none;padding:10px 12px;border-radius:10px;background:var(--surf2);border:1px dashed var(--line)}
+.hintbox.on{display:block;animation:fade .2s}
+.btn.mini{padding:7px 13px;font-size:13.5px;border-radius:10px}
+.lvl.wide{width:100%;display:block}
+.lvl.wide h3{font-size:20px}
+.lvl.wide::after{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--brand)}
+.fb{margin-top:16px;padding:14px 16px;border-radius:12px;border:1px solid var(--line);background:var(--surf2);font-size:14.5px;display:none}
+.fb.on{display:block;animation:fade .2s}
+.fb b{font-family:Outfit;display:block;margin-bottom:3px;font-size:15px}
+.fb.ok{border-color:var(--acc);background:var(--acc-soft)}
+.fb.no{border-color:var(--bad);background:var(--bad-soft)}
+.qfoot{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:18px;flex-wrap:wrap}
+
+/* ---------- Spreadsheet ---------- */
+.sheet{overflow-x:auto;margin:0 0 16px;border:1px solid var(--line);border-radius:10px;background:var(--surf)}
+table.xl{border-collapse:collapse;font-size:13.5px;min-width:100%;font-family:Inter,sans-serif}
+table.xl th,table.xl td{border:1px solid var(--line);padding:6px 10px;white-space:nowrap}
+table.xl thead th{background:var(--surf2);color:var(--mut);font-weight:700;font-size:11.5px;text-align:center;font-family:"JetBrains Mono",monospace}
+table.xl tbody th{background:var(--surf2);color:var(--mut);font-weight:700;font-size:11.5px;text-align:center;width:34px;font-family:"JetBrains Mono",monospace}
+table.xl td.n{text-align:right;font-variant-numeric:tabular-nums}
+table.xl td.hl{background:var(--acc-soft)}
+
+/* ---------- Result ---------- */
+.res{padding:30px;margin:26px 0;text-align:center}
+.res .big{font-family:Outfit;font-size:54px;font-weight:800;line-height:1;letter-spacing:-.03em}
+.res .starsbig{font-size:34px;letter-spacing:6px;color:var(--gold);margin:8px 0}
+.res .starsbig .off{color:var(--lock)}
+.review{text-align:left;margin-top:22px;display:grid;gap:8px}
+.rv{padding:12px 14px;border-radius:10px;border:1px solid var(--line);background:var(--surf2);font-size:13.5px}
+.rv b{display:block;font-weight:600;margin-bottom:3px}
+.rv .a{color:var(--acc);font-family:"JetBrains Mono",monospace;font-size:12.5px}
+.rv .w{color:var(--bad);font-family:"JetBrains Mono",monospace;font-size:12.5px;text-decoration:line-through}
+.btnrow{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:22px}
+
+/* ---------- Exam ---------- */
+.timer{font-family:"JetBrains Mono",monospace;font-weight:700}
+.timer.warn{color:var(--bad)}
+.dots{display:flex;gap:4px;flex-wrap:wrap;margin-top:10px}
+.dot{width:9px;height:9px;border-radius:99px;background:var(--bg2);border:1px solid var(--line)}
+.dot.done{background:var(--brand);border-color:var(--brand)}
+
+/* ---------- Certificate ---------- */
+.certwrap{margin:24px 0}
+#certArea{background:#fff;border-radius:12px;overflow:hidden;border:1px solid var(--line);box-shadow:var(--shadow)}
+#certArea svg{display:block;width:100%;height:auto}
+.nameform{display:flex;gap:10px;flex-wrap:wrap;margin:16px 0}
+.nameform input{flex:1;min-width:240px;font-size:16px;padding:13px 15px;border-radius:12px;border:1.5px solid var(--line);background:var(--surf2);color:var(--ink);font-family:Outfit;font-weight:600}
+.nameform input:focus{outline:none;border-color:var(--brand)}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(20px);background:var(--ink);color:var(--bg);padding:11px 20px;border-radius:99px;font-size:14px;font-weight:600;opacity:0;pointer-events:none;transition:.25s;z-index:99}
+.toast.on{opacity:1;transform:translateX(-50%)}
+footer{padding:40px 0 60px;text-align:center;color:var(--mut);font-size:13px}
+
+@media print{
+  @page{size:A4 landscape;margin:0}
+  body{background:#fff}
+  body *{visibility:hidden}
+  #certArea,#certArea *{visibility:visible}
+  #certArea{position:absolute;left:0;top:0;width:100%;border:0;box-shadow:none;border-radius:0}
+}
+@media (max-width:560px){
+  .hero{padding:20px;gap:18px}.hero h1{font-size:24px}
+  .qtext{font-size:18px}.res .big{font-size:42px}
+  .brand span{display:none}
+}
+</style>
+</head>
+<body>
+
+<div class="top">
+  <div class="wrap">
+    <button class="brand" onclick="go('home')">
+      <div class="logo">▶</div>
+      <div><b>Slide Master</b><span>Akademi Ppt</span></div>
+    </button>
+    <div class="spacer"></div>
+    <div class="chip gold" id="xpChip">⚡ 0 XP</div>
+    <div class="chip" id="lvChip">📚 0/12 modul</div>
+    <div class="theme-group" aria-label="Pilih tema">
+      <button type="button" class="theme-btn" data-theme="system" title="Otomatis" aria-label="Otomatis">🖥️</button>
+      <button type="button" class="theme-btn" data-theme="light" title="Terang" aria-label="Terang">☀️</button>
+      <button type="button" class="theme-btn" data-theme="dark" title="Gelap" aria-label="Gelap">🌙</button>
+    </div>
+    <button class="iconbtn" id="sndBtn" title="Suara" onclick="toggleSound()">🔊</button>
+  </div>
+</div>
+
+<!-- ================= HOME ================= -->
+<section id="home" class="on">
+<div class="wrap">
+
+  <div class="hero card">
+    <div class="ring">
+      <svg viewBox="0 0 120 120" width="112" height="112">
+        <circle cx="60" cy="60" r="52" fill="none" stroke="var(--line)" stroke-width="12"/>
+        <circle id="ringFill" cx="60" cy="60" r="52" fill="none" stroke="var(--brand)" stroke-width="12"
+                stroke-linecap="round" stroke-dasharray="327" stroke-dashoffset="327"/>
+      </svg>
+      <b id="ringTxt">0%</b>
+    </div>
+    <div style="flex:1;min-width:250px">
+      <h1>Kuasai PowerPoint<br>sambil bermain dengan menyenangkan.</h1>
+      <p id="heroP"></p>
+      <div class="statrow">
+        <span class="chip" id="stQ">🎯 0 soal benar</span>
+        <span class="chip" id="stStar">⭐ 0 bintang</span>
+        <span class="chip" id="stStreak">🔥 Rekor beruntun 0</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="sectitle"><h2>Modul Wajib</h2><span class="muted sm">Fondasi yang harus dituntaskan lebih dulu</span></div>
+  <div id="coreBox"></div>
+
+  <div class="sectitle"><h2>Pilih Modul Sesukamu</h2><span class="muted sm" id="freeNote"></span></div>
+  <div class="grid" id="lvGrid"></div>
+
+  <div class="sectitle"><h2>Ujian Master PowerPoint</h2></div>
+  <div class="exam-cta" id="examCta"></div>
+
+  <div class="sectitle"><h2>Lencana</h2></div>
+  <div class="badges" id="badgeGrid"></div>
+
+  <div class="sectitle"><h2>Pengaturan</h2></div>
+  <div class="card" style="padding:18px;display:flex;gap:10px;flex-wrap:wrap;align-items:center">
+    <span class="sm muted" style="flex:1;min-width:220px">Progres tersimpan otomatis di perangkat ini.</span>
+    <button class="btn" onclick="resetAll()">Reset semua progres</button>
+  </div>
+</div>
+</section>
+
+<!-- ================= LEVEL INTRO ================= -->
+<section id="intro">
+<div class="wrap">
+  <div class="intro card" id="introBox"></div>
+</div>
+</section>
+
+<!-- ================= QUIZ ================= -->
+<section id="quiz">
+<div class="wrap">
+  <div class="qbar">
+    <button class="iconbtn" onclick="quitQuiz()" title="Keluar">✕</button>
+    <div class="pbar"><i id="qProg" style="width:0%"></i></div>
+    <div class="hearts" id="qHearts"></div>
+    <div class="chip" id="qStreak" style="display:none">🔥 0</div>
+    <div class="chip timer" id="qTimer" style="display:none">20:00</div>
+  </div>
+  <div class="qcard card" id="qCard"></div>
+</div>
+</section>
+
+<!-- ================= RESULT ================= -->
+<section id="result">
+<div class="wrap"><div class="res card" id="resBox"></div></div>
+</section>
+
+<!-- ================= CERTIFICATE ================= -->
+<section id="cert">
+<div class="wrap">
+  <div style="margin:24px 0 0">
+    <h2 style="font-size:26px">🏆 Sertifikat Master PowerPoint</h2>
+    <p class="muted sm" style="margin:6px 0 0">Tulis nama lengkapmu persis seperti yang ingin tercetak di sertifikat.</p>
+    <div class="nameform">
+      <input id="certName" placeholder="Nama lengkap kamu" maxlength="42" autocomplete="name">
+      <button class="btn primary" onclick="buildCert()">Buat Sertifikat</button>
+    </div>
+  </div>
+  <div class="certwrap"><div id="certArea"></div></div>
+  <div class="btnrow" style="justify-content:flex-start">
+    <button class="btn primary" onclick="window.print()">🖨️ Cetak / Simpan PDF</button>
+    <button class="btn" id="pngBtn" onclick="savePNG()" style="display:none">⬇️ Unduh PNG</button>
+    <button class="btn" onclick="go('home')">Kembali ke beranda</button>
+  </div>
+  <p class="muted sm">Tips mencetak: pilih orientasi <b>Landscape</b>, ukuran kertas A4, dan aktifkan "Background graphics" agar warna ikut tercetak.</p>
+</div>
+</section>
+
+<footer>Slide Master · dibuat untuk belajar Microsoft PowerPoint - co. MSugi</footer>
+<div class="toast" id="toast"></div>
+
+<script>
+/* =========================================================
+   DATA MATERI & SOAL
+   ========================================================= */
+function S(cols, rows, start){ return {cols:cols, rows:rows, start:start||1}; }
+
+const LEVELS = [
+{
+ id:1, icon:"▦", name:"Dasar & Navigasi File", core:true,
+ desc:"Fondasi wajib: menyimpan file, berpindah tampilan, dan shortcut yang dipakai setiap hari. Selesaikan ini untuk membuka semua modul lain.",
+ tags:["Ctrl+M","F5","Views","Ekstensi File"],
+ notes:[
+  {f:"Ctrl+M", d:"Menambahkan slide baru setelah slide yang sedang aktif."},
+  {f:"F5 / Shift+F5", d:"F5 memulai Slide Show dari slide pertama. Shift+F5 memulai dari slide yang sedang dibuka."},
+  {f:"Esc", d:"Mengakhiri Slide Show atau membatalkan aksi yang sedang berjalan."},
+  {f:".pptx / .ppsx / .potx / .pptm", d:"Presentasi biasa · Show yang langsung tayang saat dibuka · Template · Presentasi dengan macro."},
+  {f:"Normal, Slide Sorter, Reading, Outline", d:"Empat tampilan utama di tab View. Slide Sorter untuk menyusun ulang urutan slide sebagai thumbnail."},
+  {f:"Ctrl+S / F12", d:"Ctrl+S menyimpan langsung. F12 membuka dialog Save As untuk menyimpan sebagai file/nama baru."}
+ ],
+ qs:[
+  {t:"fill", q:"Tulis shortcut keyboard untuk menambahkan slide baru.",
+   a:["CTRL+M"], hint:"Huruf M seperti \"More slide\".",
+   e:"Ctrl+M. Slide baru akan mengikuti layout slide yang sedang aktif."},
+  {t:"fill", q:"Tulis shortcut untuk memulai Slide Show dari slide PERTAMA.",
+   a:["F5"], hint:"Satu tombol fungsi saja.",
+   e:"F5. Bila ingin memulai dari slide yang sedang terbuka (bukan dari awal), gunakan Shift+F5."},
+  {t:"fill", q:"Tulis shortcut untuk memulai Slide Show dari slide yang SEDANG AKTIF, bukan dari awal.",
+   a:["SHIFT+F5"], hint:"Kombinasi Shift dengan tombol fungsi yang sama seperti soal sebelumnya.",
+   e:"Shift+F5. Berguna saat berlatih atau memperbaiki bagian tengah presentasi tanpa mengulang dari slide pertama."},
+  {t:"fill", q:"Tulis ekstensi file untuk presentasi PowerPoint standar (tanpa macro).",
+   a:[".PPTX","PPTX"], hint:"Empat huruf setelah titik.",
+   e:".pptx adalah format standar sejak PowerPoint 2007 ke atas."},
+  {t:"fill", q:"Tulis ekstensi file yang membuat presentasi LANGSUNG tayang sebagai Slide Show begitu file dibuka, tanpa masuk ke mode edit lebih dulu.",
+   a:[".PPSX","PPSX"], hint:"Mirip .pptx tapi huruf kedua diganti S seperti \"Show\".",
+   e:".ppsx cocok dikirim ke orang lain yang hanya perlu menonton, bukan mengedit."},
+  {t:"mc", q:"Tampilan mana yang menampilkan seluruh slide sebagai thumbnail kecil, memudahkan menyusun ulang urutan lewat drag-and-drop?",
+   o:["Normal View","Slide Sorter View","Reading View","Notes Page"], a:1,
+   e:"Slide Sorter dirancang khusus untuk melihat alur presentasi secara keseluruhan dan menata ulang urutan slide."},
+  {t:"mc", q:"Kamu ingin mengetik dan merapikan seluruh teks presentasi dulu sebelum memikirkan desain, tanpa terganggu tampilan visual slide. Tampilan yang paling cocok adalah...",
+   o:["Slide Master","Outline View","Slide Sorter","Reading View"], a:1,
+   e:"Outline View menampilkan hierarki judul dan isi teks seperti kerangka dokumen, cocok untuk menyusun alur ide lebih dulu."}
+ ]
+},
+{
+ id:2, icon:"🎨", name:"Desain & Tema",
+ desc:"Membuat presentasi terlihat profesional dalam hitungan klik lewat tema, variant, dan Designer.",
+ tags:["Themes","Variants","Designer","16:9"],
+ notes:[
+  {f:"Design > Themes", d:"Satu set tampilan (warna, font, tata letak) yang diterapkan ke seluruh presentasi sekaligus."},
+  {f:"Variants", d:"Variasi warna atau gaya dari tema yang sama, tanpa mengubah struktur layout."},
+  {f:"Designer / Design Ideas", d:"Fitur yang otomatis menyarankan beberapa opsi tata letak visual berdasarkan konten dan gambar di slide."},
+  {f:"Slide Size (16:9 vs 4:3)", d:"16:9 adalah rasio widescreen modern, 4:3 rasio klasik yang lebih jarang dipakai sekarang."},
+  {f:"Template (.potx)", d:"Berbeda dari tema: template menyimpan contoh slide dan pengaturan siap pakai untuk dipakai berulang, disimpan sebagai .potx."},
+  {f:"Format Background", d:"Mengatur warna, gradasi, atau gambar latar untuk satu slide atau semua slide sekaligus."}
+ ],
+ qs:[
+  {t:"fill", q:"Tulis rasio aspek WIDESCREEN yang menjadi standar modern untuk presentasi.",
+   a:["16:9","16/9"], hint:"Format angka:angka.",
+   e:"16:9. Sejak PowerPoint 2013, ini menjadi ukuran default menggantikan rasio lama."},
+  {t:"fill", q:"Tulis rasio aspek KLASIK yang dipakai layar proyektor lama sebelum era widescreen.",
+   a:["4:3","4/3"], hint:"Format angka:angka, lebih persegi.",
+   e:"4:3. Masih relevan bila presentasi ditampilkan di proyektor atau layar lama yang belum widescreen."},
+  {t:"fill", q:"Tulis ekstensi file untuk sebuah Template PowerPoint.",
+   a:[".POTX","POTX"], hint:"Mirip .pptx tapi diakhiri huruf yang menandakan template.",
+   e:".potx menyimpan struktur dan gaya siap pakai, berbeda dari .pptx yang menyimpan presentasi berisi konten aktual."},
+  {t:"mc", q:"Kamu sudah menyukai satu tema, tapi ingin skema warnanya sedikit berbeda tanpa mengubah tata letak elemen di slide. Yang dipilih adalah...",
+   o:["Membuat Template baru","Memilih salah satu Variants dari tema yang sama","Mengedit Slide Master dari nol","Mengganti Slide Size"], a:1,
+   e:"Variants menawarkan variasi warna/gaya dari tema yang sama tanpa mengacak ulang struktur layout."},
+  {t:"mc", q:"Setelah menempelkan foto besar dan mengetik judul di slide kosong, muncul panel di sisi kanan menawarkan beberapa tata letak visual otomatis. Fitur ini bernama...",
+   o:["Slide Master","Designer (Design Ideas)","Animation Pane","Format Painter"], a:1,
+   e:"Designer menganalisis konten slide (gambar, jumlah teks) lalu menyarankan beberapa alternatif tata letak siap pakai."},
+  {t:"mc", q:"Perbedaan mendasar antara Theme dan Template adalah...",
+   o:["Tidak ada bedanya sama sekali","Template menyertakan contoh konten/slide siap pakai, Theme hanya gaya visual (warna, font, layout)","Theme hanya untuk PowerPoint online","Template tidak bisa disimpan"], a:1,
+   e:"Theme murni gaya visual yang bisa diterapkan ke presentasi mana pun, sedangkan Template biasanya sudah berisi contoh slide dan struktur konten."},
+  {t:"mc", q:"Untuk mengubah rasio slide dari 4:3 menjadi 16:9 pada presentasi yang sudah dibuat, menu yang dipakai adalah...",
+   o:["Design > Slide Size","Insert > New Slide","Transitions > Effect Options","View > Slide Master"], a:0,
+   e:"Design > Slide Size menyediakan pilihan Standard (4:3) dan Widescreen (16:9), plus opsi ukuran custom."}
+ ]
+},
+{
+ id:3, icon:"✎", name:"Teks, Outline & Placeholder",
+ desc:"Mengetik, merapikan, dan mengatur level teks dengan cepat lewat keyboard.",
+ tags:["Tab","Ctrl+B","Placeholder","AutoFit"],
+ notes:[
+  {f:"Placeholder", d:"Kotak bawaan pada layout (judul, isi, gambar) yang otomatis mengikuti gaya tema. Berbeda dari Text Box biasa yang ditambahkan manual."},
+  {f:"Tab / Shift+Tab", d:"Di Outline View atau awal baris placeholder: Tab menurunkan level bullet, Shift+Tab menaikkannya."},
+  {f:"Ctrl+B / Ctrl+I / Ctrl+U", d:"Menebalkan, memiringkan, dan menggarisbawahi teks yang dipilih."},
+  {f:"Ctrl+E / Ctrl+L / Ctrl+R", d:"Perataan teks: tengah, kiri, kanan."},
+  {f:"Ctrl+Shift+> / Ctrl+Shift+<", d:"Memperbesar dan memperkecil ukuran font teks yang dipilih."},
+  {f:"AutoFit", d:"Teks otomatis mengecil agar tetap muat dalam placeholder saat isinya terlalu panjang."}
+ ],
+ qs:[
+  {t:"fill", q:"Kursor berada di awal baris bullet pada Outline View. Tulis tombol untuk MENURUNKAN level bullet tersebut (menjadikannya sub-poin).",
+   a:["TAB"], hint:"Satu tombol saja, tanpa Ctrl atau Shift.",
+   e:"Tab menurunkan (demote) level bullet satu tingkat ke dalam."},
+  {t:"fill", q:"Tulis kombinasi tombol untuk MENAIKKAN kembali level bullet tersebut ke level sebelumnya.",
+   a:["SHIFT+TAB"], hint:"Kebalikan dari soal sebelumnya.",
+   e:"Shift+Tab menaikkan (promote) level bullet satu tingkat ke luar."},
+  {t:"fill", q:"Teks sudah dipilih (diblok). Tulis shortcut untuk membuatnya TEBAL.",
+   a:["CTRL+B"], hint:"B seperti \"Bold\".",
+   e:"Ctrl+B. Berlaku sama seperti di Word dan aplikasi Office lainnya."},
+  {t:"fill", q:"Tulis shortcut untuk merapikan perataan teks yang dipilih menjadi RATA TENGAH.",
+   a:["CTRL+E"], hint:"E seperti \"cEnter\".",
+   e:"Ctrl+E. Untuk rata kiri gunakan Ctrl+L, rata kanan Ctrl+R."},
+  {t:"fill", q:"Tulis shortcut untuk MEMPERBESAR ukuran font dari teks yang dipilih.",
+   a:["CTRL+SHIFT+>"], hint:"Ctrl+Shift ditambah tanda lebih besar.",
+   e:"Ctrl+Shift+>. Kebalikannya, Ctrl+Shift+<, memperkecil ukuran font."},
+  {t:"mc", q:"Perbedaan utama Placeholder dengan Text Box biasa adalah...",
+   o:["Tidak ada bedanya","Placeholder mengikuti gaya dan posisi dari layout/tema, Text Box ditambahkan manual dan bebas posisinya","Text Box tidak bisa diisi teks","Placeholder hanya untuk gambar"], a:1,
+   e:"Placeholder adalah bagian bawaan layout yang otomatis konsisten dengan tema, sedangkan Text Box adalah kotak teks bebas yang kita tambahkan sendiri."},
+  {t:"mc", q:"Judul yang diketik terlalu panjang otomatis mengecil ukuran hurufnya agar tetap muat dalam kotak placeholder. Perilaku ini disebut...",
+   o:["Format Painter","AutoFit","WordArt","Slide Master"], a:1,
+   e:"AutoFit menyesuaikan ukuran teks secara otomatis agar pas dalam batas placeholder-nya."}
+ ]
+},
+{
+ id:4, icon:"🖼", name:"Objek, Gambar & Bentuk",
+ desc:"Menyisipkan, merapikan, dan menata gambar serta bentuk dengan presisi.",
+ tags:["Ctrl+G","Remove BG","Alt Text","Align"],
+ notes:[
+  {f:"Insert > Pictures", d:"Menyisipkan gambar dari perangkat, stok foto online, atau ikon vektor bawaan."},
+  {f:"Picture Format > Remove Background", d:"Menghapus latar belakang foto secara otomatis; area yang akan dihapus ditandai warna magenta sebelum dikonfirmasi."},
+  {f:"Crop", d:"Memotong bagian gambar yang tidak diinginkan tanpa mengubah file aslinya."},
+  {f:"Alt Text", d:"Deskripsi teks tersembunyi pada gambar untuk pembaca layar (accessibility). Diperiksa lewat Review > Check Accessibility."},
+  {f:"Ctrl+G / Ctrl+Shift+G", d:"Menggabungkan beberapa objek terpilih menjadi satu (Group), dan memisahkannya kembali (Ungroup)."},
+  {f:"Align & Distribute", d:"Arrange > Align untuk merapikan objek (rata kiri/tengah/kanan) dan menyebar jaraknya secara merata."}
+ ],
+ qs:[
+  {t:"fill", q:"Dua gambar dan satu kotak teks sudah dipilih bersamaan. Tulis shortcut untuk menggabungkannya menjadi satu objek (Group).",
+   a:["CTRL+G"], hint:"G seperti \"Group\".",
+   e:"Ctrl+G. Objek yang sudah digroup bisa dipindah dan diubah ukurannya sebagai satu kesatuan."},
+  {t:"fill", q:"Tulis shortcut untuk memisahkan kembali objek yang sudah digroup (Ungroup).",
+   a:["CTRL+SHIFT+G"], hint:"Tambahkan Shift dari shortcut sebelumnya.",
+   e:"Ctrl+Shift+G."},
+  {t:"mc", q:"Fitur yang menghapus latar belakang sebuah foto secara otomatis, dengan area yang akan dibuang ditandai warna magenta sebelum dikonfirmasi, adalah...",
+   o:["Crop","Remove Background","Compress Pictures","Change Picture"], a:1,
+   e:"Remove Background ada di tab Picture Format setelah gambar dipilih. Hasilnya bisa disempurnakan manual dengan menandai area tambahan yang perlu disimpan atau dibuang."},
+  {t:"mc", q:"Deskripsi teks tersembunyi pada gambar yang membantu pengguna pembaca layar memahami isi gambar disebut...",
+   o:["Caption","Alt Text","Watermark","Tooltip"], a:1,
+   e:"Alt Text penting untuk aksesibilitas. Presentasi bisa diperiksa kelengkapan Alt Text-nya lewat Review > Check Accessibility."},
+  {t:"mc", q:"Lima kotak bentuk (shape) ingin dijajarkan dengan jarak antar-kotak yang persis sama rata. Fitur yang dipakai adalah...",
+   o:["Group","Align > Distribute Horizontally","Format Painter","Send to Back"], a:1,
+   e:"Distribute Horizontally/Vertically pada menu Align menyeimbangkan jarak antar objek secara otomatis setelah objek-objek itu dipilih semuanya."},
+  {t:"mc", q:"Cara memotong bagian tepi sebuah foto yang tidak diinginkan, tanpa mengubah file gambar aslinya di komputer, adalah...",
+   o:["Crop","Remove Background","Group","Alt Text"], a:0,
+   e:"Crop memotong tampilan gambar di dalam slide; file sumber di luar PowerPoint tidak ikut berubah."},
+  {t:"mc", q:"Tiga bentuk saling bertumpuk dan kamu ingin satu bentuk tertentu tampil paling depan. Cara mengaturnya adalah...",
+   o:["Klik kanan bentuk → Bring to Front","Ctrl+G","Format Background","Slide Master"], a:0,
+   e:"Klik kanan objek lalu pilih Bring to Front (atau Bring Forward untuk maju satu lapis saja) mengatur urutan tumpukan (z-order) objek."}
+ ]
+},
+{
+ id:5, icon:"📊", name:"Grafik, Tabel & SmartArt",
+ desc:"Mengubah data dan daftar teks membosankan menjadi visual yang enak dibaca.",
+ tags:["Chart","Table","SmartArt"],
+ notes:[
+  {f:"Insert > Table", d:"Menyisipkan tabel dengan menentukan jumlah kolom dan baris lebih dulu."},
+  {f:"Insert > Chart", d:"Menyisipkan grafik (batang, garis, pie, dan lainnya) lengkap dengan lembar data mini ala Excel untuk mengubah angkanya."},
+  {f:"Insert > SmartArt", d:"Diagram siap pakai untuk proses, hierarki, siklus, atau hubungan, tanpa perlu menggambar manual."},
+  {f:"Convert to SmartArt", d:"Tombol yang muncul saat sebuah placeholder berisi daftar bullet dipilih, mengubah teks polos jadi diagram visual secara instan."},
+  {f:"Edit Data in Excel", d:"Tombol pada grafik yang sudah disisipkan untuk membuka kembali lembar data sumbernya dan mengubah angkanya."}
+ ],
+ qs:[
+  {t:"mc", q:"Sebuah placeholder berisi lima baris bullet point proses kerja. Tombol yang muncul untuk langsung mengubahnya menjadi diagram alur visual bernama...",
+   o:["Insert Chart","Convert to SmartArt","Format Painter","Design Ideas"], a:1,
+   e:"Convert to SmartArt Graphic muncul di sisi kiri bawah placeholder teks dan mengubah bullet menjadi diagram tanpa mengetik ulang."},
+  {t:"mc", q:"Setelah grafik batang disisipkan ke slide, cara mengubah angka-angka yang membentuk grafik tersebut adalah...",
+   o:["Mengedit teks di slide langsung","Klik grafik → Edit Data in Excel","Menghapus grafik dan membuat ulang","Design > Variants"], a:1,
+   e:"Edit Data in Excel membuka kembali lembar data sumber grafik; perubahan di sana otomatis memperbarui tampilan grafik di slide."},
+  {t:"mc", q:"Diagram siap pakai untuk menggambarkan struktur organisasi atau tahapan proses, tanpa perlu menggambar kotak dan panah manual, disediakan lewat menu...",
+   o:["Insert > SmartArt","Insert > Table","Design > Themes","Animations"], a:0,
+   e:"SmartArt menyediakan puluhan tata letak diagram siap pakai yang tinggal diisi teksnya."},
+  {t:"mc", q:"Kamu ingin menampilkan perbandingan penjualan empat kuartal secara visual. Pilihan yang paling tepat adalah...",
+   o:["SmartArt Process","Chart (grafik batang)","Table kosong","WordArt"], a:1,
+   e:"Grafik (chart) adalah cara terbaik menampilkan data numerik yang perlu dibandingkan secara visual."},
+  {t:"mc", q:"Cara menyisipkan tabel 4 kolom dan 6 baris ke dalam slide adalah...",
+   o:["Insert > Table, lalu tentukan jumlah kolom dan barisnya","Insert > SmartArt","Insert > Chart","Menggambar garis manual dengan Shapes"], a:0,
+   e:"Insert > Table membuka grid pemilih ukuran atau dialog untuk menentukan jumlah kolom dan baris secara pasti."},
+  {t:"mc", q:"Setelah data pada SmartArt diketik, elemen bentuk dan warnanya otomatis mengikuti tema presentasi. Ini karena...",
+   o:["SmartArt tidak bisa diubah warnanya","SmartArt terhubung dengan skema Theme yang aktif","SmartArt selalu hitam putih","SmartArt adalah gambar statis"], a:1,
+   e:"SmartArt bersifat dinamis dan mengikuti palet warna serta font dari tema yang sedang dipakai, sehingga tampilannya tetap konsisten."},
+  {t:"mc", q:"Perbedaan menambahkan tabel lewat Insert > Table dibanding menggambar kotak-kotak dengan Shapes satu per satu adalah...",
+   o:["Tidak ada bedanya","Tabel punya struktur baris/kolom asli yang mudah diisi, diformat, dan diurutkan datanya","Shapes lebih cepat untuk data terstruktur","Tabel tidak bisa diberi warna"], a:1,
+   e:"Objek Table punya struktur data asli (bisa disisipi baris/kolom, diformat sebagai satu kesatuan), berbeda dari kumpulan kotak Shapes yang berdiri sendiri-sendiri."}
+ ]
+},
+{
+ id:6, icon:"🎬", name:"Animasi",
+ desc:"Menghidupkan objek di dalam satu slide dengan animasi masuk, keluar, dan penekanan.",
+ tags:["Entrance","Exit","Animation Pane","Trigger"],
+ notes:[
+  {f:"Entrance / Emphasis / Exit / Motion Path", d:"Empat kategori animasi: objek muncul, objek ditekankan saat sudah ada, objek menghilang, dan objek bergerak sepanjang jalur tertentu."},
+  {f:"Animation Pane", d:"Panel yang menampilkan daftar semua animasi di slide secara berurutan, memudahkan mengatur urutan dan waktu."},
+  {f:"Start: On Click / With Previous / After Previous", d:"Kapan animasi dimulai: saat diklik, bersamaan dengan animasi sebelumnya, atau otomatis setelah animasi sebelumnya selesai."},
+  {f:"Trigger", d:"Membuat animasi hanya berjalan saat objek tertentu diklik, bukan mengikuti urutan otomatis."},
+  {f:"Animation Painter", d:"Menyalin pengaturan animasi dari satu objek ke objek lain, mirip cara kerja Format Painter untuk teks."}
+ ],
+ qs:[
+  {t:"mc", q:"Empat kategori dasar animasi di PowerPoint adalah...",
+   o:["Entrance, Emphasis, Exit, Motion Path","Fade, Wipe, Fly, Zoom","Subtle, Moderate, Exciting, Dynamic","Slide, Fade, Push, Cut"], a:0,
+   e:"Entrance untuk kemunculan objek, Emphasis untuk penekanan objek yang sudah ada, Exit untuk kepergian objek, Motion Path untuk pergerakan objek sepanjang jalur."},
+  {t:"mc", q:"Sebuah slide punya enam animasi. Panel yang menampilkan seluruh daftar animasi tersebut secara berurutan agar mudah diatur ulang bernama...",
+   o:["Slide Master","Animation Pane","Selection Pane","Outline View"], a:1,
+   e:"Animation Pane membuka daftar semua animasi pada slide aktif, lengkap dengan urutan dan durasinya."},
+  {t:"mc", q:"Kamu ingin sebuah animasi berjalan OTOMATIS begitu animasi sebelumnya selesai, tanpa perlu mengklik apa pun. Pengaturan Start yang dipilih adalah...",
+   o:["On Click","With Previous","After Previous","Trigger"], a:2,
+   e:"After Previous membuat animasi berjalan otomatis segera setelah animasi urutan sebelumnya tuntas."},
+  {t:"mc", q:"Kamu ingin sebuah kotak penjelasan baru muncul HANYA ketika ikon tertentu diklik, bukan mengikuti urutan animasi biasa. Fitur yang dipakai adalah...",
+   o:["Trigger","Motion Path","Animation Painter","Emphasis"], a:0,
+   e:"Trigger mengaitkan animasi dengan objek pemicu tertentu, sehingga urutannya bisa dikendalikan sesuai klik pengguna, bukan otomatis berurutan."},
+  {t:"mc", q:"Sebuah judul sudah diberi animasi Fade yang pas. Cara tercepat menerapkan animasi identik ke lima judul slide lain tanpa mengatur ulang dari nol adalah...",
+   o:["Mengulang pengaturan animasi manual di tiap slide","Animation Painter","Slide Master","Convert to SmartArt"], a:1,
+   e:"Animation Painter menyalin seluruh pengaturan animasi (jenis, durasi, urutan) dari satu objek ke objek lain, mirip Format Painter."},
+  {t:"mc", q:"Objek yang ingin ditekankan (misalnya diperbesar sesaat) padahal objeknya sudah muncul sejak awal slide, menggunakan kategori animasi...",
+   o:["Entrance","Emphasis","Exit","Motion Path"], a:1,
+   e:"Emphasis dipakai untuk objek yang sudah tampil di slide dan ingin diberi penekanan tambahan, seperti membesar, berputar, atau berubah warna sesaat."},
+  {t:"mc", q:"Animasi Motion Path pada PowerPoint berfungsi untuk...",
+   o:["Membuat objek menghilang","Membuat objek bergerak mengikuti jalur/lintasan tertentu di slide","Mengganti warna objek","Menggabungkan dua objek"], a:1,
+   e:"Motion Path menggambar lintasan (garis, lingkaran, atau bentuk custom) yang akan dilalui objek saat animasi berjalan."}
+ ]
+},
+{
+ id:7, icon:"🔀", name:"Transisi Antar Slide",
+ desc:"Efek perpindahan dari satu slide ke slide berikutnya, bukan animasi objek di dalam slide.",
+ tags:["Transitions","Duration","Apply to All"],
+ notes:[
+  {f:"Transitions tab", d:"Berbeda dari Animations: transisi mengatur efek PERPINDAHAN antar slide, bukan gerakan objek di dalam satu slide."},
+  {f:"Subtle / Exciting / Dynamic Content", d:"Tiga kelompok gaya transisi di galeri, dari yang halus sampai yang paling mencolok."},
+  {f:"Effect Options", d:"Mengatur arah atau variasi dari transisi yang dipilih, misalnya arah masuk dari kiri atau kanan."},
+  {f:"Duration", d:"Lama waktu transisi berlangsung, diatur dalam satuan detik."},
+  {f:"Apply to All", d:"Menerapkan pengaturan transisi yang sama ke SELURUH slide dalam presentasi sekaligus."},
+  {f:"Advance Slide", d:"Menentukan slide berpindah otomatis setelah sekian detik, atau tetap menunggu klik mouse."}
+ ],
+ qs:[
+  {t:"mc", q:"Perbedaan mendasar antara Transition dan Animation adalah...",
+   o:["Tidak ada bedanya","Transition mengatur efek perpindahan ANTAR slide, Animation mengatur gerakan objek DI DALAM satu slide","Animation hanya untuk teks","Transition hanya untuk gambar"], a:1,
+   e:"Keduanya sering tertukar. Transition ada di tab Transitions dan berlaku saat berpindah slide, sedangkan Animation ada di tab Animations dan berlaku untuk objek dalam satu slide yang sama."},
+  {t:"mc", q:"Setelah memilih satu jenis transisi untuk slide pertama, tombol yang membuat transisi yang sama diterapkan ke SEMUA slide sekaligus adalah...",
+   o:["Effect Options","Apply to All","Animation Pane","Duration"], a:1,
+   e:"Apply to All menyalin pengaturan transisi (jenis, durasi, suara) dari slide aktif ke seluruh slide presentasi."},
+  {t:"mc", q:"Pengaturan yang menentukan berapa lama sebuah transisi berlangsung, misalnya 0.5 detik atau 2 detik, bernama...",
+   o:["Duration","Effect Options","Advance Slide","Trigger"], a:0,
+   e:"Duration diukur dalam detik dan memengaruhi seberapa cepat atau lambat transisi terasa."},
+  {t:"mc", q:"Agar sebuah slide berpindah OTOMATIS ke slide berikutnya setelah 5 detik tanpa perlu diklik, pengaturan yang diubah adalah...",
+   o:["Effect Options","Advance Slide → After (diisi 5 detik)","Duration menjadi 5","Apply to All"], a:1,
+   e:"Advance Slide punya opsi \"On Mouse Click\" dan \"After\", di mana After diisi jumlah detik untuk perpindahan otomatis."},
+  {t:"mc", q:"Transisi \"Push\" dipilih dengan arah masuk dari kanan, kemudian ingin diubah arahnya menjadi dari bawah. Pengaturan yang diubah adalah...",
+   o:["Duration","Effect Options","Advance Slide","Sound"], a:1,
+   e:"Effect Options menyediakan variasi arah atau gaya tambahan sesuai jenis transisi yang dipilih."},
+  {t:"mc", q:"Galeri transisi PowerPoint mengelompokkan efeknya ke dalam tiga kategori visual, yaitu...",
+   o:["Subtle, Exciting, Dynamic Content","Masuk, Tengah, Keluar","Cepat, Sedang, Lambat","Teks, Gambar, Video"], a:0,
+   e:"Subtle untuk efek halus seperti Fade, Exciting untuk efek lebih dramatis seperti Cube atau Vortex, dan Dynamic Content untuk transisi yang menganimasikan konten antar slide dengan layout serupa."},
+  {t:"mc", q:"Menambahkan efek suara pendek yang berbunyi setiap kali transisi berlangsung diatur lewat pengaturan...",
+   o:["Sound pada tab Transitions","Insert > Audio","Animation Pane","Rehearse Timings"], a:0,
+   e:"Tab Transitions memiliki dropdown Sound untuk memilih efek suara singkat yang menyertai perpindahan slide."}
+ ]
+},
+{
+ id:8, icon:"🎧", name:"Multimedia: Audio & Video",
+ desc:"Menyisipkan dan mengatur suara serta video agar berjalan sesuai keinginan.",
+ tags:["Insert Audio","Insert Video","Playback","Trigger"],
+ notes:[
+  {f:"Insert > Audio / Video", d:"Menyisipkan file suara atau video dari perangkat, atau video online lewat tautan."},
+  {f:"Playback tab", d:"Muncul setelah audio/video dipilih. Mengatur Start (Automatically/On Click), volume, loop, dan trim durasi."},
+  {f:"Trim", d:"Memotong bagian awal atau akhir audio/video tanpa mengedit file aslinya di luar PowerPoint."},
+  {f:"Play in Background", d:"Membuat audio terus berjalan melintasi beberapa slide, bukan berhenti saat slide berganti."},
+  {f:"Poster Frame", d:"Gambar sampul yang tampil sebelum video diputar, bisa diganti manual dengan frame video pilihan sendiri."}
+ ],
+ qs:[
+  {t:"mc", q:"Cara memotong 10 detik pertama sebuah video yang sudah disisipkan, tanpa mengedit file video aslinya, adalah...",
+   o:["Crop","Trim (Playback > Trim Video)","Remove Background","Compress Media"], a:1,
+   e:"Trim Video pada tab Playback memotong bagian awal/akhir tayangan di dalam PowerPoint saja; file sumber di luar tetap utuh."},
+  {t:"mc", q:"Agar musik latar terus terdengar mengalir dari slide 1 sampai slide 5, bukan berhenti tiap kali slide berganti, pengaturan yang diaktifkan adalah...",
+   o:["Loop Until Stopped saja","Play in Background","Trim Audio","Rehearse Timings"], a:1,
+   e:"Play in Background (tersedia sebagai tombol cepat di Playback tab) otomatis mengatur audio agar diputar otomatis dan terus mengalir lintas slide."},
+  {t:"mc", q:"Gambar sampul yang tampil di atas video sebelum tombol putar ditekan disebut...",
+   o:["Thumbnail Painter","Poster Frame","Trigger Frame","Cover Slide"], a:1,
+   e:"Poster Frame bisa diganti manual, misalnya memilih salah satu adegan dari video itu sendiri sebagai sampul."},
+  {t:"mc", q:"Pengaturan Start pada tab Playback untuk audio/video punya dua opsi utama, yaitu...",
+   o:["Loop dan Trim","Automatically dan On Click","Fade In dan Fade Out","Compress dan Expand"], a:1,
+   e:"Automatically memutar media otomatis begitu slide muncul, On Click menunggu media diklik dulu baru diputar."},
+  {t:"mc", q:"Kamu ingin video hanya mulai diputar ketika ikon tombol play kustom di slide diklik, bukan ikon videonya sendiri. Fitur yang relevan adalah...",
+   o:["Trigger pada tab Animations","Trim Video","Poster Frame","Effect Options"], a:0,
+   e:"Trigger memungkinkan aksi putar video dikaitkan ke objek lain di slide, seperti tombol play kustom yang dibuat dari Shape."},
+  {t:"mc", q:"File presentasi menjadi sangat besar karena berisi banyak video kualitas tinggi. Fitur untuk memperkecil ukuran file tanpa menghapus videonya adalah...",
+   o:["Compress Media","Remove Background","Trim Video saja","Group"], a:0,
+   e:"Compress Media (File > Info > Compress Media) menurunkan kualitas/resolusi video dan audio demi ukuran file yang lebih ringkas."},
+  {t:"mc", q:"Untuk menyisipkan video langsung dari tautan YouTube ke dalam slide, menu yang dipakai adalah...",
+   o:["Insert > Video > Online Video","Insert > Audio","Insert > Screen Recording","Insert > Hyperlink"], a:0,
+   e:"Insert > Video > Online Video memungkinkan penyisipan video dari tautan, sehingga video diputar langsung dari sumbernya saat presentasi tayang (perlu koneksi internet)."}
+ ]
+},
+{
+ id:9, icon:"🗂", name:"Slide Master & Layout Kustom",
+ desc:"Mengatur satu tempat yang mengendalikan tampilan seluruh slide sekaligus.",
+ tags:["Slide Master","Layout","Header & Footer"],
+ notes:[
+  {f:"View > Slide Master", d:"Mode edit khusus tempat mengubah gaya (font, warna, posisi placeholder) yang berlaku untuk banyak slide sekaligus."},
+  {f:"Slide Master vs Layout", d:"Satu Slide Master induk menaungi beberapa Layout turunan (misalnya Title Slide, Title and Content). Mengubah Master memengaruhi semua Layout di bawahnya."},
+  {f:"Insert Layout / Insert Placeholder", d:"Membuat layout baru khusus atau menambah jenis placeholder baru (teks, gambar, tabel) di dalam mode Slide Master."},
+  {f:"Insert > Header & Footer", d:"Mengatur nomor slide, tanggal, dan teks footer agar konsisten tampil di semua slide sekaligus."},
+  {f:"Keluar dari Slide Master", d:"Tombol Close Master View mengembalikan tampilan ke Normal View."}
+ ],
+ qs:[
+  {t:"mc", q:"Logo perusahaan perlu muncul otomatis di pojok kanan bawah SEMUA slide tanpa menempelkannya satu per satu. Cara paling efisien adalah...",
+   o:["Menempel logo manual di tiap slide","Menambahkan logo sekali di View > Slide Master","Insert > SmartArt","Format Background di tiap slide"], a:1,
+   e:"Elemen yang ditambahkan di Slide Master otomatis muncul di semua layout dan slide turunannya."},
+  {t:"mc", q:"Hubungan antara satu Slide Master dan beberapa Layout di bawahnya adalah...",
+   o:["Tidak berhubungan sama sekali","Slide Master adalah induk gaya, Layout adalah variasi turunan untuk jenis slide berbeda (judul, konten, dsb)","Layout mengatur Master","Keduanya adalah fitur yang sama persis"], a:1,
+   e:"Perubahan pada Slide Master (misalnya jenis font) akan diwariskan ke seluruh Layout turunannya, kecuali Layout tersebut sudah diatur berbeda secara manual."},
+  {t:"mc", q:"Cara menampilkan nomor halaman secara otomatis dan konsisten di seluruh slide adalah lewat menu...",
+   o:["Insert > Header & Footer","Design > Variants","Review > Comments","Animations > Trigger"], a:0,
+   e:"Insert > Header & Footer memiliki opsi centang Slide Number yang berlaku untuk semua slide sekaligus (kecuali slide yang sengaja dikecualikan)."},
+  {t:"mc", q:"Untuk membuat jenis layout baru, misalnya layout khusus dua kolom foto berdampingan yang belum tersedia di galeri, dilakukan lewat...",
+   o:["View > Slide Master > Insert Layout","Insert > SmartArt","Design > Themes","Transitions"], a:0,
+   e:"Insert Layout di mode Slide Master membuat layout kosong baru yang bisa diisi kombinasi placeholder sesuai kebutuhan."},
+  {t:"mc", q:"Cara kembali dari mode Slide Master ke tampilan edit slide biasa (Normal View) adalah...",
+   o:["Menutup file lalu membuka ulang","Klik Close Master View","Tekan Delete","Insert > New Slide"], a:1,
+   e:"Tombol Close Master View di ujung kanan ribbon mode Slide Master mengembalikan tampilan ke Normal View."},
+  {t:"mc", q:"Satu slide tertentu (misalnya slide sampul) TIDAK ingin menampilkan nomor halaman, sementara slide lain tetap menampilkannya. Cara mengaturnya adalah...",
+   o:["Menghapus Slide Master sepenuhnya","Insert > Header & Footer, centang \"Don't Show on Title Slide\"","Insert Layout baru untuk tiap slide","Tidak bisa dilakukan"], a:1,
+   e:"Dialog Header & Footer memiliki opsi khusus untuk mengecualikan slide judul dari nomor halaman."},
+  {t:"mc", q:"Placeholder jenis baru (misalnya khusus untuk ikon) yang belum ada di layout manapun bisa ditambahkan lewat...",
+   o:["Insert Placeholder di mode Slide Master","Insert > Icons langsung di Normal View","Format Background","Animation Pane"], a:0,
+   e:"Insert Placeholder hanya aktif di dalam mode Slide Master, dipakai untuk merancang jenis layout baru dari nol."}
+ ]
+},
+{
+ id:10, icon:"💬", name:"Kolaborasi & Review",
+ desc:"Bekerja bersama tim: memberi komentar, membandingkan revisi, dan melindungi file.",
+ tags:["Comments","Compare","Mark as Final"],
+ notes:[
+  {f:"Review > New Comment", d:"Menambahkan catatan pada slide atau objek tertentu tanpa mengubah isi presentasi, terlihat oleh kolaborator lain."},
+  {f:"Review > Compare", d:"Membandingkan dua versi presentasi dan menampilkan perbedaannya, mirip Track Changes pada Word."},
+  {f:"Share (co-authoring)", d:"Beberapa orang mengedit presentasi yang sama secara bersamaan lewat OneDrive/SharePoint, perubahan terlihat real-time."},
+  {f:"Mark as Final", d:"Menandai file sebagai versi final; file masih bisa dibuka tapi diberi peringatan agar tidak sembarang diedit."},
+  {f:"Check Accessibility", d:"Memeriksa masalah aksesibilitas seperti gambar tanpa Alt Text atau kontras warna yang kurang."}
+ ],
+ qs:[
+  {t:"mc", q:"Cara memberi catatan pada sebuah slide tanpa mengubah isi kontennya, agar rekan kerja bisa membaca masukan tersebut, adalah...",
+   o:["Menulis di Speaker Notes saja","Review > New Comment","Mengetik langsung di atas teks slide","Insert > Text Box"], a:1,
+   e:"Comments muncul sebagai catatan terpisah yang ditautkan ke slide atau objek tertentu, tidak ikut tercetak/tertayang saat presentasi berjalan."},
+  {t:"mc", q:"Dua rekan kerja masing-masing mengedit salinan presentasi yang sama secara terpisah. Fitur untuk melihat perbedaan antara kedua versi tersebut adalah...",
+   o:["Review > Compare","Design > Variants","Slide Master","Animation Pane"], a:0,
+   e:"Review > Compare menggabungkan dua file dan menampilkan daftar perubahan yang bisa diterima atau ditolak satu per satu."},
+  {t:"mc", q:"Cara agar beberapa orang bisa mengedit satu file presentasi yang sama secara bersamaan dan saling melihat perubahan real-time adalah...",
+   o:["Mengirim file lewat email bergantian","Menyimpan file ke OneDrive/SharePoint lalu memakai fitur Share","Mark as Final","Compress Media"], a:1,
+   e:"Co-authoring memerlukan file tersimpan di layanan cloud seperti OneDrive atau SharePoint, lalu dibagikan lewat tombol Share."},
+  {t:"mc", q:"Menandai presentasi sebagai versi final agar orang lain diberi peringatan sebelum mengedit lebih lanjut dilakukan lewat...",
+   o:["File > Info > Protect Presentation > Mark as Final","Insert > Comment","Save As PDF","Delete Slide"], a:0,
+   e:"Mark as Final membuat file bersifat read-only secara default, meski proteksinya bisa dilewati oleh siapa pun yang tahu caranya — bukan pengaman yang kuat, hanya penanda."},
+  {t:"mc", q:"Fitur yang memeriksa apakah ada gambar tanpa Alt Text atau kontras warna teks yang sulit dibaca disebut...",
+   o:["Check Accessibility","Compress Media","Compare","Rehearse Timings"], a:0,
+   e:"Review > Check Accessibility menampilkan daftar masalah beserta saran perbaikannya."},
+  {t:"mc", q:"Sebuah komentar pada slide sudah selesai ditindaklanjuti. Cara menandainya agar tidak lagi terlihat aktif adalah...",
+   o:["Menghapus slide tersebut","Resolve pada komentar tersebut","Mark as Final seluruh file","Compress Media"], a:1,
+   e:"Tombol Resolve menandai sebuah thread komentar sebagai selesai dibahas, tanpa perlu menghapus riwayat percakapannya."},
+  {t:"mc", q:"Presentasi ingin dilindungi dengan kata sandi agar hanya orang tertentu yang bisa membukanya. Pengaturan ini ada di...",
+   o:["File > Info > Protect Presentation > Encrypt with Password","Review > New Comment","Design > Slide Size","Insert > Header & Footer"], a:0,
+   e:"Encrypt with Password meminta kata sandi setiap kali file akan dibuka, berbeda dengan Mark as Final yang hanya penanda tanpa proteksi kuat."}
+ ]
+},
+{
+ id:11, icon:"🎤", name:"Menyajikan Presentasi",
+ desc:"Teknik dan shortcut untuk tampil percaya diri saat presentasi berlangsung.",
+ tags:["Presenter View","Alt+F5","Rehearse Timings"],
+ notes:[
+  {f:"Presenter View", d:"Layar presenter menampilkan slide aktif, slide berikutnya, catatan, dan waktu berjalan, sementara audiens hanya melihat slide biasa di layar utama."},
+  {f:"Alt+F5", d:"Shortcut untuk langsung memulai Slide Show dalam mode Presenter View."},
+  {f:"B dan W (saat Slide Show)", d:"Menekan B membuat layar menjadi hitam polos, W membuat layar putih polos — berguna mengalihkan perhatian audiens sejenak."},
+  {f:"Ctrl+L (saat Slide Show)", d:"Mengubah pointer mouse menjadi laser pointer virtual untuk menunjuk bagian slide."},
+  {f:"Rehearse Timings", d:"Merekam berapa lama waktu yang dihabiskan di tiap slide saat berlatih, agar transisi otomatis mengikuti waktu tersebut."},
+  {f:"Record Slide Show", d:"Merekam narasi suara, video wajah presenter, dan timing sekaligus, menghasilkan presentasi yang bisa diputar mandiri."}
+ ],
+ qs:[
+  {t:"fill", q:"Tulis shortcut untuk langsung memulai Slide Show dalam mode Presenter View.",
+   a:["ALT+F5"], hint:"Kombinasi Alt dengan tombol fungsi yang sama seperti memulai Slide Show biasa.",
+   e:"Alt+F5. Presenter melihat catatan dan slide berikutnya, sementara layar proyektor/audiens hanya menampilkan slide aktif."},
+  {t:"fill", q:"Saat Slide Show sedang berjalan, tulis satu huruf yang membuat layar menjadi HITAM polos (menyembunyikan slide sejenak).",
+   a:["B"], hint:"Huruf pertama dari warnanya dalam bahasa Inggris.",
+   e:"B (Black). Tekan lagi tombol apa saja untuk kembali menampilkan slide."},
+  {t:"fill", q:"Saat Slide Show sedang berjalan, tulis satu huruf yang membuat layar menjadi PUTIH polos.",
+   a:["W"], hint:"Huruf pertama dari warnanya dalam bahasa Inggris.",
+   e:"W (White)."},
+  {t:"fill", q:"Saat Slide Show sedang berjalan, tulis shortcut untuk mengubah kursor mouse menjadi laser pointer virtual.",
+   a:["CTRL+L"], hint:"L seperti \"Laser\".",
+   e:"Ctrl+L. Untuk mengembalikan kursor menjadi panah biasa, gunakan Ctrl+A."},
+  {t:"mc", q:"Fitur yang menampilkan catatan presenter, slide berikutnya, dan waktu berjalan di layar presenter, sementara audiens hanya melihat slide polos, adalah...",
+   o:["Slide Sorter","Presenter View","Outline View","Reading View"], a:1,
+   e:"Presenter View memisahkan tampilan layar presenter dan layar proyeksi audiens, biasanya otomatis aktif saat memakai dua layar."},
+  {t:"mc", q:"Untuk mencatat berapa detik waktu yang dihabiskan pada tiap slide saat berlatih, lalu memakai waktu itu untuk perpindahan slide otomatis nantinya, fitur yang dipakai adalah...",
+   o:["Rehearse Timings","Record Slide Show","Compare","Check Accessibility"], a:0,
+   e:"Rehearse Timings (Slide Show tab) merekam durasi tiap slide selama sesi latihan, lalu menyimpannya sebagai pengaturan Advance Slide otomatis."},
+  {t:"mc", q:"Mode presentasi yang membuat slide berjalan berulang secara mandiri di sebuah pameran, dengan sebagian besar kontrol keyboard dan klik dinonaktifkan, disebut...",
+   o:["Presenter View","Browsed at a Kiosk (Full Screen)","Outline View","Compare Mode"], a:1,
+   e:"Mode kiosk diatur lewat Slide Show > Set Up Slide Show, cocok untuk booth pameran yang berjalan tanpa operator."}
+ ]
+},
+{
+ id:12, icon:"📤", name:"Ekspor & Berbagi",
+ desc:"Mengubah presentasi menjadi format lain untuk dibagikan atau diarsipkan.",
+ tags:["Export Video","PDF","Handout"],
+ notes:[
+  {f:"File > Export > Create a Video", d:"Mengubah seluruh presentasi (termasuk animasi, transisi, narasi) menjadi satu file video."},
+  {f:"File > Export > Create Handouts", d:"Mengirim slide ke Microsoft Word dengan tata letak handout (misalnya slide di kiri, kolom catatan di kanan)."},
+  {f:"Save As PDF", d:"Menyimpan tampilan statis presentasi sebagai PDF; animasi dan transisi tidak ikut tersimpan, hanya tampilan akhirnya."},
+  {f:"Save as Picture / Export Slides as Images", d:"Menyimpan setiap slide sebagai file gambar terpisah (misalnya PNG atau JPG)."},
+  {f:"Embed Fonts", d:"Menyertakan file font khusus ke dalam presentasi (File > Options > Save) agar tampilan tetap sama di komputer lain yang belum punya font tersebut."},
+  {f:"Present Online", d:"Membagikan tautan agar orang lain bisa menonton presentasi secara langsung dari browser tanpa perlu membuka PowerPoint."}
+ ],
+ qs:[
+  {t:"mc", q:"Cara mengubah seluruh presentasi lengkap dengan animasi, transisi, dan narasi suara menjadi satu file video yang bisa diputar di media player mana pun adalah...",
+   o:["Save As PDF","File > Export > Create a Video","Save as Picture","Print"], a:1,
+   e:"Create a Video merender seluruh slide berikut animasi dan narasinya menjadi satu file video (biasanya .mp4)."},
+  {t:"mc", q:"Dosen ingin membagikan slide kuliah dalam bentuk dokumen yang bisa dicoret-coret mahasiswa, dengan slide kecil di satu sisi dan ruang kosong untuk catatan di sisi lain. Fitur yang dipakai adalah...",
+   o:["Create Handouts (export ke Word)","Create a Video","Package Presentation","Present Online"], a:0,
+   e:"Create Handouts mengirim slide ke dokumen Word dengan beberapa pilihan tata letak, salah satunya slide di kiri dan area catatan kosong di kanan."},
+  {t:"mc", q:"Menyimpan presentasi sebagai PDF akan menghasilkan file yang...",
+   o:["Masih bisa diedit teksnya seperti di PowerPoint","Menampilkan tampilan statis slide, tanpa animasi dan transisi yang ikut berjalan","Otomatis terkirim sebagai email","Berformat video"], a:1,
+   e:"PDF menangkap tampilan akhir tiap slide sebagai halaman statis; efek animasi dan transisi tidak ikut tersimpan karena sifatnya bergerak."},
+  {t:"mc", q:"Presentasi yang memakai font custom akan tampil berantakan (font berubah) saat dibuka di komputer lain yang tidak memiliki font tersebut. Cara mencegahnya adalah...",
+   o:["Mengubah semua teks jadi gambar","Mengaktifkan Embed Fonts di pengaturan Save","Compress Media","Mark as Final"], a:1,
+   e:"Embed Fonts menyertakan data font ke dalam file presentasi itu sendiri, sehingga tampilan tetap konsisten di perangkat mana pun."},
+  {t:"mc", q:"Membagikan tautan agar rekan yang tidak punya PowerPoint tetap bisa menonton presentasi langsung lewat browser dilakukan lewat fitur...",
+   o:["Present Online","Create Handouts","Save as Picture","Compress Media"], a:0,
+   e:"Present Online menghasilkan tautan unik yang bisa dibuka penonton lewat browser, menampilkan slide secara real-time mengikuti presenter."},
+  {t:"mc", q:"Cara menyimpan setiap slide sebagai file gambar terpisah, misalnya untuk diunggah satu per satu ke media sosial, adalah...",
+   o:["Save As, lalu pilih tipe file PNG/JPEG","Create a Video","Create Handouts","Present Online"], a:0,
+   e:"Saat Save As dan memilih format gambar seperti PNG, PowerPoint menawarkan opsi menyimpan \"Every Slide\" sebagai file-file gambar terpisah dalam satu folder."},
+  {t:"mc", q:"Perbedaan utama antara Export ke Video dengan Export ke PDF adalah...",
+   o:["Tidak ada bedanya","Video menyertakan gerakan (animasi/transisi/narasi berjalan seiring waktu), PDF hanya tampilan statis tiap slide","PDF bisa diputar di media player","Video tidak bisa dibagikan"], a:1,
+   e:"Video bersifat dinamis mengikuti durasi waktu, sedangkan PDF hanya representasi diam dari setiap slide."}
+ ]
+}
+];
+
+/* ------ Bank soal khusus Ujian Master ------ */
+const EXAM_POOL = [
+ {t:"fill", q:"Tulis shortcut untuk menduplikasi slide yang sedang dipilih di panel slide.",
+  a:["CTRL+D"], hint:"D seperti \"Duplicate\".",
+  e:"Ctrl+D. Berlaku juga untuk menduplikasi objek yang sedang dipilih di dalam slide."},
+ {t:"fill", q:"Tulis shortcut untuk membuka dialog Save As agar file bisa disimpan dengan nama atau format baru.",
+  a:["F12"], hint:"Satu tombol fungsi.",
+  e:"F12. Berbeda dari Ctrl+S yang langsung menyimpan tanpa membuka dialog (kecuali file belum pernah disimpan sama sekali)."},
+ {t:"fill", q:"Tulis shortcut untuk menyisipkan hyperlink pada teks atau objek yang sedang dipilih.",
+  a:["CTRL+K"], hint:"K seperti \"linK\".",
+  e:"Ctrl+K membuka dialog Insert Hyperlink."},
+ {t:"fill", q:"Tulis shortcut untuk menampilkan atau menyembunyikan garis bantu Gridlines pada slide.",
+  a:["SHIFT+F9"], hint:"Shift ditambah tombol fungsi.",
+  e:"Shift+F9. Untuk garis bantu Guides (bisa digeser bebas), gunakan Alt+F9."},
+ {t:"fill", q:"Tulis shortcut untuk menampilkan atau menyembunyikan Guides (garis bantu yang bisa digeser posisinya).",
+  a:["ALT+F9"], hint:"Alt ditambah tombol fungsi yang sama seperti Gridlines.",
+  e:"Alt+F9."},
+ {t:"fill", q:"Tulis shortcut untuk menyalin format (Format Painter) dari objek/teks yang sedang dipilih.",
+  a:["CTRL+SHIFT+C"], hint:"Ctrl+Shift ditambah huruf C seperti \"Copy format\".",
+  e:"Ctrl+Shift+C untuk menyalin format, lalu Ctrl+Shift+V pada objek tujuan untuk menempelkannya."},
+ {t:"fill", q:"Tulis shortcut untuk menempelkan format yang sudah disalin sebelumnya ke objek/teks lain.",
+  a:["CTRL+SHIFT+V"], hint:"Pasangan dari shortcut menyalin format.",
+  e:"Ctrl+Shift+V."},
+ {t:"fill", q:"Tulis ekstensi file untuk presentasi yang menyertakan macro (VBA).",
+  a:[".PPTM","PPTM"], hint:"Mirip .pptx tapi huruf terakhir menandakan macro.",
+  e:".pptm. File .pptx biasa tidak bisa menyimpan macro sama sekali."},
+ {t:"fill", q:"Tulis shortcut untuk memindahkan tampilan ke slide PERTAMA dalam presentasi (saat panel slide sedang aktif).",
+  a:["CTRL+HOME"], hint:"Ctrl ditambah tombol navigasi ke awal.",
+  e:"Ctrl+Home. Untuk menuju slide terakhir, gunakan Ctrl+End."},
+ {t:"fill", q:"Tulis shortcut untuk memindahkan tampilan ke slide TERAKHIR dalam presentasi.",
+  a:["CTRL+END"], hint:"Kebalikan dari soal sebelumnya.",
+  e:"Ctrl+End."},
+ {t:"fill", q:"Teks sudah dipilih. Tulis shortcut untuk membuatnya MIRING (italic).",
+  a:["CTRL+I"], hint:"I seperti \"Italic\".",
+  e:"Ctrl+I."},
+ {t:"fill", q:"Tulis shortcut untuk memeriksa ejaan (spelling check) pada presentasi.",
+  a:["F7"], hint:"Satu tombol fungsi, sama seperti di Word.",
+  e:"F7."},
+ {t:"mc", q:"Kombinasi Ctrl+M pada PowerPoint berfungsi untuk...",
+  o:["Menyisipkan gambar","Menambahkan slide baru","Membuka Slide Master","Memulai Slide Show"], a:1,
+  e:"Ctrl+M menambahkan slide baru setelah slide aktif."},
+ {t:"mc", q:"Slide Show sedang berjalan dan presenter ingin mengakhirinya sebelum sampai slide terakhir. Tombol yang ditekan adalah...",
+  o:["Esc","Delete","Ctrl+Z","Alt+F4"], a:0,
+  e:"Esc menghentikan Slide Show dan kembali ke tampilan edit terakhir."},
+ {t:"mc", q:"File presentasi ingin dikirim ke klien HANYA untuk ditonton, tanpa mereka perlu masuk ke mode edit terlebih dulu saat membuka filenya. Format yang paling cocok adalah...",
+  o:[".pptx","ppsx",".potx",".pptm"], a:1,
+  e:".ppsx langsung membuka Slide Show begitu file diklik dua kali, cocok untuk dibagikan sebagai tontonan siap saji."},
+ {t:"mc", q:"Rasio 16:9 dibandingkan 4:3 pada pengaturan Slide Size adalah...",
+  o:["16:9 lebih persegi","16:9 adalah rasio widescreen modern, 4:3 rasio klasik yang lebih jarang dipakai sekarang","4:3 lebih lebar","Tidak ada bedanya secara visual"], a:1,
+  e:"16:9 sudah menjadi standar sejak PowerPoint 2013 ke atas karena sesuai dengan layar widescreen modern."},
+ {t:"mc", q:"Fitur yang otomatis menyarankan beberapa tata letak visual begitu gambar besar ditempelkan ke slide kosong disebut...",
+  o:["Slide Master","Designer (Design Ideas)","Format Painter","Animation Pane"], a:1,
+  e:"Designer menganalisis konten slide dan menawarkan beberapa alternatif tata letak instan di panel sisi kanan."},
+ {t:"mc", q:"Placeholder berbeda dari Text Box biasa karena...",
+  o:["Placeholder tidak bisa diisi gambar","Placeholder mengikuti gaya dan posisi bawaan layout/tema","Text Box tidak bisa dipindah","Keduanya identik"], a:1,
+  e:"Placeholder adalah bagian resmi dari layout yang otomatis konsisten dengan tema, Text Box ditambahkan bebas secara manual."},
+ {t:"mc", q:"Kotak teks judul terus mengecil sendiri hurulnya karena isinya terlalu panjang untuk muat dalam kotaknya. Perilaku otomatis ini disebut...",
+  o:["AutoFit","Trim","Compress Media","Crop"], a:0,
+  e:"AutoFit menyesuaikan ukuran font secara otomatis agar teks tetap muat dalam batas placeholder."},
+ {t:"mc", q:"Beberapa gambar dan kotak teks digabung menjadi satu objek agar mudah dipindah bersamaan. Perintah yang dipakai adalah...",
+  o:["Ctrl+G (Group)","Ctrl+Shift+G (Ungroup)","Crop","Align"], a:0,
+  e:"Ctrl+G menyatukan objek-objek terpilih menjadi satu kesatuan yang bisa digeser dan diubah ukurannya bersamaan."},
+ {t:"mc", q:"Deskripsi tersembunyi pada gambar untuk mendukung pembaca layar (accessibility) disebut...",
+  o:["Caption","Alt Text","Watermark","Poster Frame"], a:1,
+  e:"Alt Text bisa diperiksa kelengkapannya lewat Review > Check Accessibility."},
+ {t:"mc", q:"Tombol Convert to SmartArt yang muncul pada sebuah placeholder berfungsi untuk...",
+  o:["Mengubah daftar bullet teks menjadi diagram visual","Menyisipkan video","Mengubah warna tema","Menambahkan animasi"], a:0,
+  e:"Convert to SmartArt langsung mengubah teks bullet yang sudah diketik menjadi diagram siap pakai tanpa mengetik ulang."},
+ {t:"mc", q:"Untuk mengganti angka-angka pada grafik yang sudah disisipkan ke slide, cara yang benar adalah...",
+  o:["Menghapus grafik dan membuatnya dari nol","Klik grafik lalu pilih Edit Data in Excel","Mengetik ulang teks di atas grafik","Design > Variants"], a:1,
+  e:"Edit Data in Excel membuka kembali lembar data sumber grafik yang otomatis memperbarui tampilannya."},
+ {t:"mc", q:"Kategori animasi yang membuat objek MENGHILANG dari slide disebut...",
+  o:["Entrance","Emphasis","Exit","Motion Path"], a:2,
+  e:"Exit adalah kebalikan dari Entrance — dipakai saat objek perlu meninggalkan slide."},
+ {t:"mc", q:"Pengaturan Start dengan opsi \"With Previous\" pada sebuah animasi berarti...",
+  o:["Animasi menunggu diklik","Animasi berjalan BERSAMAAN dengan animasi sebelumnya, tanpa jeda","Animasi berjalan setelah animasi sebelumnya selesai","Animasi hanya berjalan saat objek tertentu diklik"], a:1,
+  e:"With Previous membuat dua atau lebih animasi berjalan serentak pada waktu yang sama."},
+ {t:"mc", q:"Perbedaan Transition dan Animation yang paling tepat adalah...",
+  o:["Transition untuk objek di dalam slide, Animation untuk perpindahan slide","Transition untuk perpindahan ANTAR slide, Animation untuk objek DI DALAM satu slide","Keduanya sama persis","Transition hanya berlaku untuk teks"], a:1,
+  e:"Transition ada di tab Transitions (perpindahan slide), Animation ada di tab Animations (gerakan objek dalam satu slide)."},
+ {t:"mc", q:"Tombol Apply to All pada tab Transitions berfungsi untuk...",
+  o:["Menghapus semua transisi","Menerapkan transisi yang sama ke seluruh slide presentasi","Menyalin animasi ke objek lain","Menggabungkan semua slide menjadi satu"], a:1,
+  e:"Apply to All menyalin pengaturan transisi dari slide aktif ke semua slide lain dalam presentasi."},
+ {t:"mc", q:"Fitur Trim Video pada tab Playback berguna untuk...",
+  o:["Memotong bagian awal/akhir video tanpa mengubah file aslinya","Menghapus latar belakang video","Mengubah resolusi video","Menyalin video ke slide lain"], a:0,
+  e:"Trim hanya memengaruhi tampilan pemutaran di dalam PowerPoint, file video sumber di luar tetap utuh."},
+ {t:"mc", q:"Elemen (misalnya logo) yang ditambahkan sekali di View > Slide Master akan...",
+  o:["Hanya muncul di satu slide","Otomatis muncul di semua layout dan slide turunannya","Terhapus saat presentasi disimpan","Perlu ditambahkan ulang di tiap slide"], a:1,
+  e:"Perubahan di Slide Master diwariskan ke seluruh Layout dan slide yang memakainya."},
+ {t:"mc", q:"Cara menampilkan nomor slide secara konsisten di semua slide, kecuali slide judul, adalah lewat...",
+  o:["Insert > Header & Footer, centang Slide Number dan Don't Show on Title Slide","Design > Slide Size","Review > Compare","Transitions > Effect Options"], a:0,
+  e:"Dialog Header & Footer punya opsi khusus mengecualikan slide judul dari nomor halaman."},
+ {t:"mc", q:"Fitur Review > Compare pada PowerPoint berguna untuk...",
+  o:["Membandingkan dua versi presentasi dan menampilkan perbedaannya","Membandingkan ukuran file","Mengubah tema","Menyisipkan komentar baru"], a:0,
+  e:"Compare menggabungkan dua file dan menandai perbedaan yang bisa diterima atau ditolak satu per satu, mirip Track Changes di Word."},
+ {t:"mc", q:"Mark as Final pada sebuah presentasi berarti...",
+  o:["File terkunci permanen dan tidak bisa dibuka lagi","File ditandai final dan diberi peringatan sebelum diedit lebih lanjut, meski proteksinya tidak kuat","File otomatis terhapus setelah 30 hari","File berubah menjadi PDF"], a:1,
+  e:"Mark as Final hanyalah penanda dan peringatan, bukan proteksi keamanan yang kuat seperti Encrypt with Password."},
+ {t:"mc", q:"Presenter ingin melihat catatan (speaker notes) dan slide berikutnya di layar laptopnya, sementara audiens di proyektor hanya melihat slide biasa. Fitur ini adalah...",
+  o:["Slide Sorter","Presenter View","Outline View","Compare"], a:1,
+  e:"Presenter View memisahkan tampilan layar presenter (berisi catatan, timer, preview slide berikutnya) dari layar yang dilihat audiens."},
+ {t:"mc", q:"Fitur Rehearse Timings berguna untuk...",
+  o:["Merekam narasi suara","Mencatat durasi tiap slide saat berlatih agar dipakai sebagai waktu perpindahan otomatis","Memeriksa ejaan","Menyisipkan video"], a:1,
+  e:"Rehearse Timings menyimpan berapa lama presenter berbicara di tiap slide selama sesi latihan."},
+ {t:"mc", q:"Mode Browsed at a Kiosk (Full Screen) pada Set Up Slide Show cocok dipakai untuk...",
+  o:["Presentasi formal dengan presenter di depan","Booth pameran yang berjalan mandiri berulang tanpa operator","Rapat kolaborasi tim","Mengedit slide bersama"], a:1,
+  e:"Mode kiosk membuat presentasi berjalan otomatis berulang dengan sebagian besar kontrol keyboard/mouse dinonaktifkan, cocok untuk area pameran tanpa pengawasan."},
+ {t:"mc", q:"Perbedaan hasil ekspor Create a Video dibanding Save As PDF adalah...",
+  o:["Video menyertakan animasi/transisi/narasi yang berjalan, PDF hanya tampilan statis tiap slide","PDF bisa diputar di media player","Video tidak bisa dibagikan ke orang lain","Keduanya menghasilkan file identik"], a:0,
+  e:"Video bersifat dinamis mengikuti waktu, sedangkan PDF hanya representasi diam untuk tiap halaman/slide."},
+ {t:"mc", q:"Fitur Embed Fonts pada pengaturan Save berguna ketika...",
+  o:["Ingin mengompres ukuran video","Presentasi memakai font custom dan akan dibuka di komputer lain yang belum memiliki font tersebut","Ingin menyisipkan hyperlink","Ingin membuat handout"], a:1,
+  e:"Tanpa Embed Fonts, komputer lain yang tidak punya font yang sama akan menggantinya dengan font default sehingga tampilan berantakan."},
+ {t:"mc", q:"Create Handouts (export ke Word) paling cocok dipakai ketika...",
+  o:["Ingin membuat video presentasi","Ingin membagikan salinan slide dengan ruang kosong untuk catatan tulisan tangan","Ingin menyimpan slide sebagai gambar","Ingin menyisipkan komentar"], a:1,
+  e:"Create Handouts menyusun slide dan area catatan kosong dalam tata letak dokumen Word yang siap dicetak."},
+ {t:"mc", q:"Fitur Present Online memungkinkan...",
+  o:["Menyimpan presentasi sebagai gambar","Audiens menonton presentasi lewat browser tanpa perlu membuka PowerPoint","Mengedit bersama secara real-time","Merekam narasi suara"], a:1,
+  e:"Present Online membagikan tautan unik yang bisa dibuka penonton lewat browser, mengikuti tampilan presenter secara langsung."},
+ {t:"mc", q:"Cara menyisipkan tabel dengan jumlah kolom dan baris yang sudah ditentukan sejak awal adalah lewat menu...",
+  o:["Insert > Table","Insert > SmartArt","Insert > Chart","Design > Themes"], a:0,
+  e:"Insert > Table menyediakan grid pemilih ukuran atau dialog untuk menentukan jumlah kolom dan baris."},
+ {t:"mc", q:"Sebuah bentuk berada di lapisan paling belakang, tertutup oleh bentuk lain. Cara memajukannya ke lapisan paling depan adalah...",
+  o:["Klik kanan → Bring to Front","Ctrl+G","Crop","Trim"], a:0,
+  e:"Bring to Front mengatur urutan tumpukan (z-order) sehingga objek terpilih tampil paling atas."}
+];
+
+/* =========================================================
+   STATE
+   ========================================================= */
+const KEY = "slidemaster.v1";
+const DEF = {xp:0, done:{}, best:{}, bestStreak:0, correct:0, retries:0, exam:null, sound:true, name:""};
+let ST = load();
+
+function load(){
+  try{
+    const raw = localStorage.getItem(KEY);
+    if(!raw) return Object.assign({}, DEF);
+    const o = JSON.parse(raw);
+    return Object.assign({}, DEF, o||{});
+  }catch(e){ return Object.assign({}, DEF); }
+}
+function save(){ try{ localStorage.setItem(KEY, JSON.stringify(ST)); }catch(e){} }
+
+const THEME_KEY = "slidemaster-theme";
+function applyTheme(mode){
+  const currentMode = ["system","light","dark"].includes(mode) ? mode : "system";
+  const isDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+  const resolvedTheme = currentMode === "system" ? (isDark ? "dark" : "light") : currentMode;
+  document.documentElement.setAttribute("data-theme", resolvedTheme);
+
+  document.querySelectorAll(".theme-btn").forEach(function(btn){
+    const active = btn.dataset.theme === currentMode;
+    btn.classList.toggle("active", active);
+    btn.setAttribute("aria-pressed", active ? "true" : "false");
+  });
+
+  try{ localStorage.setItem(THEME_KEY, currentMode); }catch(e){}
+}
+function initTheme(){
+  const buttons = document.querySelectorAll(".theme-btn");
+  if(!buttons.length) return;
+
+  const stored = localStorage.getItem(THEME_KEY) || "system";
+  const mode = ["system","light","dark"].includes(stored) ? stored : "system";
+  const media = window.matchMedia("(prefers-color-scheme: dark)");
+  const syncSystemTheme = function(){
+    const current = localStorage.getItem(THEME_KEY) || "system";
+    if(current === "system") applyTheme("system");
+  };
+  if(media.addEventListener){ media.addEventListener("change", syncSystemTheme); }
+  else if(media.addListener){ media.addListener(syncSystemTheme); }
+
+  buttons.forEach(function(btn){
+    btn.addEventListener("click", function(){ applyTheme(btn.dataset.theme); });
+  });
+
+  applyTheme(mode);
+}
+initTheme();
+
+/* =========================================================
+   UTIL
+   ========================================================= */
+function esc(s){ return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+function fmt(s){ return esc(s).replace(/`([^`]+)`/g, function(_,m){ return "<code>"+m+"</code>"; }); }
+function isNum(v){ return v!=="" && !isNaN(String(v).replace(",",".")); }
+function norm(s, keepDollar){
+  let x = String(s).toUpperCase()
+    .replace(/[\u201C\u201D\u201E]/g,'"').replace(/[\u2018\u2019]/g,'"').replace(/'/g,'"')
+    .replace(/\s+/g,"").replace(/;/g,",").replace(/^=/,"");
+  if(!keepDollar) x = x.replace(/\$/g,"");
+  return x;
+}
+function fillOK(q, val){
+  return q.a.some(function(a){ return norm(a, q.strict) === norm(val, q.strict); });
+}
+const KEYS = ["=","(",")",":",",","\"","$",">","<",">=","<=","&","*","/"];
+function ins(i){
+  const k = KEYS[i], el = document.getElementById("fillIn");
+  if(!el || el.disabled) return;
+  const a = el.selectionStart, b = el.selectionEnd;
+  el.value = el.value.slice(0,a) + k + el.value.slice(b);
+  el.selectionStart = el.selectionEnd = a + k.length;
+  el.focus();
+}
+function showHint(){
+  const b = document.getElementById("hintBox");
+  if(b) b.classList.add("on");
+}
+function toast(msg){
+  const t = document.getElementById("toast");
+  t.textContent = msg; t.classList.add("on");
+  clearTimeout(t._t); t._t = setTimeout(function(){ t.classList.remove("on"); }, 2200);
+}
+function go(id){
+  document.querySelectorAll("section").forEach(function(s){ s.classList.remove("on"); });
+  document.getElementById(id).classList.add("on");
+  window.scrollTo({top:0, behavior:"smooth"});
+}
+function sheetHTML(sh){
+  if(!sh) return "";
+  let h = '<div class="sheet"><table class="xl"><thead><tr><th></th>';
+  sh.cols.forEach(function(c){ h += "<th>"+esc(c)+"</th>"; });
+  h += "</tr></thead><tbody>";
+  sh.rows.forEach(function(r,i){
+    h += "<tr><th>"+(sh.start+i)+"</th>";
+    for(let j=0;j<sh.cols.length;j++){
+      const v = r[j]===undefined ? "" : r[j];
+      h += '<td class="'+(isNum(v)?"n":"")+'">'+esc(v)+"</td>";
+    }
+    h += "</tr>";
+  });
+  return h + "</tbody></table></div>";
+}
+function shuffle(a){
+  const x = a.slice();
+  for(let i=x.length-1;i>0;i--){ const j = Math.floor(Math.random()*(i+1)); const t=x[i]; x[i]=x[j]; x[j]=t; }
+  return x;
+}
+
+/* ---- sound ---- */
+let AC = null;
+function beep(freq, dur, type){
+  if(!ST.sound) return;
+  try{
+    AC = AC || new (window.AudioContext||window.webkitAudioContext)();
+    const o = AC.createOscillator(), g = AC.createGain();
+    o.type = type||"sine"; o.frequency.value = freq;
+    g.gain.setValueAtTime(.001, AC.currentTime);
+    g.gain.exponentialRampToValueAtTime(.09, AC.currentTime+.01);
+    g.gain.exponentialRampToValueAtTime(.001, AC.currentTime+dur);
+    o.connect(g); g.connect(AC.destination); o.start(); o.stop(AC.currentTime+dur+.02);
+  }catch(e){}
+}
+const sndOk = function(){ beep(660,.12); setTimeout(function(){beep(880,.16);},90); };
+const sndNo = function(){ beep(200,.22,"square"); };
+const sndWin = function(){ [523,659,784,1046].forEach(function(f,i){ setTimeout(function(){beep(f,.2);}, i*110); }); };
+function toggleSound(){
+  ST.sound = !ST.sound; save();
+  document.getElementById("sndBtn").textContent = ST.sound ? "🔊" : "🔇";
+  if(ST.sound) beep(700,.1);
+}
+
+/* =========================================================
+   RENDER HOME
+   ========================================================= */
+const TOTAL_Q = LEVELS.reduce(function(s,l){ return s+l.qs.length; },0);
+
+function unlocked(id){ return id===1 || !!ST.done[1]; }
+function allDone(){ return LEVELS.every(function(l){ return !!ST.done[l.id]; }); }
+function totalStars(){ return LEVELS.reduce(function(s,l){ return s + (ST.best[l.id]||0); },0); }
+
+function renderHome(){
+  const doneCount = LEVELS.filter(function(l){ return ST.done[l.id]; }).length;
+  const pct = Math.round((doneCount/LEVELS.length)*100);
+  const circ = 2*Math.PI*52;
+  document.getElementById("ringFill").setAttribute("stroke-dasharray", circ);
+  document.getElementById("ringFill").setAttribute("stroke-dashoffset", circ*(1-pct/100));
+  document.getElementById("ringTxt").textContent = pct+"%";
+  document.getElementById("xpChip").textContent = "⚡ "+ST.xp+" XP";
+  document.getElementById("lvChip").textContent = "📚 "+doneCount+"/"+LEVELS.length+" modul";
+  document.getElementById("stQ").textContent = "🎯 "+ST.correct+" soal benar";
+  document.getElementById("stStar").textContent = "⭐ "+totalStars()+"/"+(LEVELS.length*3)+" bintang";
+  document.getElementById("stStreak").textContent = "🔥 Rekor beruntun "+ST.bestStreak;
+  document.getElementById("sndBtn").textContent = ST.sound ? "🔊" : "🔇";
+  document.getElementById("heroP").innerHTML =
+    "Mulai dari Modul Dasar & Navigasi File, lalu "+(LEVELS.length-1)+" modul lain terbuka bebas kamu pilih sesuai kebutuhan. "+
+    TOTAL_Q+" tantangan berisi shortcut, istilah, dan konsep PowerPoint. Tuntaskan semuanya untuk membuka Ujian Master PowerPoint dan sertifikatnya.";
+
+  // modul
+  function cardHTML(l, wide){
+    const un = unlocked(l.id), dn = !!ST.done[l.id], st = ST.best[l.id]||0;
+    let c = '<button class="lvl'+(un?"":" locked")+(wide?" wide":"")+'" onclick="'+(un?("openLevel("+l.id+")"):"lockMsg()")+'">';
+    if(dn) c += '<div class="badge-done">SELESAI</div>';
+    c += '<div class="ico">'+(un?l.icon:"🔒")+"</div>";
+    c += '<div class="num">'+(l.core?"Modul Wajib":"Modul "+l.id)+" · "+l.qs.length+" soal</div>";
+    c += "<h3>"+esc(l.name)+"</h3><p>"+esc(l.desc)+"</p>";
+    c += '<div class="tagrow">'+l.tags.map(function(t){ return '<span class="tag">'+esc(t)+"</span>"; }).join("")+"</div>";
+    c += '<div class="stars">';
+    for(let i=1;i<=3;i++) c += (i<=st ? "★" : '<span class="off">★</span>');
+    c += "</div></button>";
+    return c;
+  }
+  document.getElementById("coreBox").innerHTML = cardHTML(LEVELS[0], true);
+  document.getElementById("lvGrid").innerHTML = LEVELS.slice(1).map(function(l){ return cardHTML(l,false); }).join("");
+  document.getElementById("freeNote").textContent = ST.done[1]
+    ? "Semua terbuka — pelajari dalam urutan mana pun kamu mau"
+    : "Terkunci sampai Modul Dasar & Navigasi File selesai";
+
+  // exam cta
+  const ready = allDone();
+  const ex = ST.exam;
+  const cta = document.getElementById("examCta");
+  cta.className = "exam-cta" + (ready?" ready":"");
+  if(ex && ex.pass){
+    cta.innerHTML = '<div class="trophy">🏆</div><div style="flex:1;min-width:230px">'+
+      "<h3>Kamu sudah Master PowerPoint!</h3>"+
+      '<p>Nilai terbaik <b>'+ex.score+"%</b> ("+ex.right+"/"+ex.total+" benar) pada "+esc(ex.date)+". Sertifikatmu siap dicetak kapan saja.</p></div>"+
+      '<div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn primary" onclick="openCert()">Lihat sertifikat</button>'+
+      '<button class="btn" onclick="startExam()">Ulang ujian</button></div>';
+  } else if(ready){
+    cta.innerHTML = '<div class="trophy">🎓</div><div style="flex:1;min-width:230px">'+
+      "<h3>Ujian Master PowerPoint terbuka</h3>"+
+      "<p>30 soal campuran dari seluruh level, batas waktu 30 menit, tanpa nyawa dan tanpa petunjuk. Nilai minimal <b>80%</b> untuk lulus dan mendapat sertifikat.</p></div>"+
+      '<button class="btn primary big" onclick="startExam()">Mulai ujian</button>';
+  } else {
+    const left = LEVELS.length - LEVELS.filter(function(l){ return ST.done[l.id]; }).length;
+    cta.innerHTML = '<div class="trophy" style="opacity:.4">🔒</div><div style="flex:1;min-width:230px">'+
+      "<h3>Ujian Master masih terkunci</h3>"+
+      "<p>Tuntaskan <b>"+left+" modul lagi</b> untuk membuka ujian akhir. Lulus ujian akan memberimu sertifikat yang bisa dicetak.</p></div>";
+  }
+
+  // badges
+  const B = [
+    {e:"🌱", n:"Fondasi Kokoh", d:"Selesaikan Modul Dasar & Navigasi File", on:!!ST.done[1]},
+    {e:"🧠", n:"Ahli Logika", d:"3 bintang di modul Logika", on:(ST.best[2]||0)>=3},
+    {e:"🔍", n:"Pemburu Data", d:"Selesaikan modul Lookup", on:!!ST.done[4]},
+    {e:"📐", n:"Analis Pivot", d:"Selesaikan modul PivotTable", on:!!ST.done[9]},
+    {e:"⚙️", n:"Sang Otomator", d:"Selesaikan modul Power Query", on:!!ST.done[10]},
+    {e:"💰", n:"Ahli Keuangan", d:"3 bintang di modul Keuangan", on:(ST.best[11]||0)>=3},
+    {e:"🔥", n:"Beruntun 10", d:"10 jawaban benar berturut-turut", on:ST.bestStreak>=10},
+    {e:"⚡", n:"Kolektor XP", d:"Kumpulkan 1.000 XP", on:ST.xp>=1000},
+    {e:"💎", n:"Perfeksionis", d:"3 bintang di semua modul", on:totalStars()>=LEVELS.length*3},
+    {e:"🏆", n:"Master PowerPoint", d:"Lulus ujian akhir", on:!!(ST.exam&&ST.exam.pass)}
+  ];
+  document.getElementById("badgeGrid").innerHTML = B.map(function(b){
+    return '<div class="bdg'+(b.on?"":" off")+'"><div class="e">'+b.e+'</div><b>'+b.n+"</b><small>"+b.d+"</small></div>";
+  }).join("");
+}
+function lockMsg(){ toast("Tuntaskan Modul Dasar & Navigasi File dulu untuk membuka semua modul 🔒"); }
+function resetAll(){
+  if(!confirm("Hapus semua progres modul, XP, bintang, dan sertifikat dari perangkat ini?")) return;
+  ST = Object.assign({}, DEF); save(); renderHome(); go("home"); toast("Progres direset");
+}
+
+/* =========================================================
+   LEVEL INTRO
+   ========================================================= */
+function openLevel(id){
+  const l = LEVELS.find(function(x){ return x.id===id; });
+  const st = ST.best[id]||0;
+  const nFill = l.qs.filter(function(q){ return q.t==="fill"; }).length;
+  let h = '<div class="num" style="font-size:12px;letter-spacing:.14em;color:var(--mut);font-weight:700;text-transform:uppercase">'+(l.core?"Modul Wajib":"Modul "+l.id)+" · "+l.qs.length+" soal</div>";
+  h += "<h2>"+l.icon+" "+esc(l.name)+"</h2>";
+  h += '<p class="muted" style="margin:4px 0 0">'+esc(l.desc)+"</p>";
+  if(st) h += '<div class="stars" style="font-size:20px">'+"★".repeat(st)+'<span class="off">'+"★".repeat(3-st)+"</span></div>";
+  h += '<h3 style="margin-top:22px;font-size:16px">📘 Materi singkat</h3><div class="notes">';
+  l.notes.forEach(function(n){ h += '<div class="note"><span class="f">'+esc(n.f)+'</span><span class="d">'+esc(n.d)+"</span></div>"; });
+  h += "</div>";
+  h += '<div class="qfoot"><span class="muted sm" style="max-width:46ch">❤️❤️❤️ Tiga nyawa. '+
+       (nFill ? nFill+" dari "+l.qs.length+" soal menuntutmu mengetik jawabannya sendiri (shortcut/istilah), dan setiap soal isian memberi dua kesempatan sebelum nyawa berkurang." : "Baca materinya dulu, lalu uji pemahamanmu.")+"</span>"+
+       '<div style="display:flex;gap:8px"><button class="btn" onclick="go(\'home\')">Kembali</button>'+
+       '<button class="btn primary big" onclick="startLevel('+l.id+')">Mulai Modul</button></div></div>';
+  document.getElementById("introBox").innerHTML = h;
+  go("intro");
+}
+
+/* =========================================================
+   MESIN KUIS
+   ========================================================= */
+let G = null;
+
+function startLevel(id){
+  const l = LEVELS.find(function(x){ return x.id===id; });
+  G = {mode:"level", lv:id, name:l.name, qs:shuffle(l.qs), i:0, right:0, wrong:0,
+       hearts:3, streak:0, xp:0, log:[], answered:false, try:0, assist:0};
+  document.getElementById("qStreak").style.display = "";
+  document.getElementById("qTimer").style.display = "none";
+  go("quiz"); drawQ();
+}
+
+function startExam(){
+  const lvPool = [];
+  LEVELS.forEach(function(l){ l.qs.forEach(function(q){ lvPool.push(q); }); });
+  const qs = shuffle(EXAM_POOL).slice(0,22).concat(shuffle(lvPool).slice(0,8));
+  G = {mode:"exam", name:"Ujian Master PowerPoint", qs:shuffle(qs), i:0, right:0, wrong:0,
+       hearts:0, streak:0, xp:0, log:[], answered:false, try:0, assist:0, left:30*60};
+  document.getElementById("qStreak").style.display = "none";
+  const tEl = document.getElementById("qTimer");
+  tEl.style.display = "";
+  clearInterval(G.timer);
+  G.timer = setInterval(function(){
+    if(!G || G.mode!=="exam") return;
+    G.left--;
+    const m = Math.floor(G.left/60), s = G.left%60;
+    tEl.textContent = m+":"+(s<10?"0":"")+s;
+    tEl.classList.toggle("warn", G.left<=120);
+    if(G.left<=0){ clearInterval(G.timer); toast("Waktu habis!"); finish(); }
+  },1000);
+  tEl.textContent = "30:00"; tEl.classList.remove("warn");
+  go("quiz"); drawQ();
+}
+
+function quitQuiz(){
+  if(!confirm("Keluar dari sesi ini? Progres sesi ini tidak disimpan.")) return;
+  if(G && G.timer) clearInterval(G.timer);
+  G = null; renderHome(); go("home");
+}
+
+function drawQ(){
+  const q = G.qs[G.i];
+  G.answered = false; G.try = 0;
+  document.getElementById("qProg").style.width = ((G.i)/G.qs.length*100)+"%";
+  document.getElementById("qStreak").textContent = "🔥 "+G.streak;
+  const hEl = document.getElementById("qHearts");
+  if(G.mode==="level"){
+    let s = "";
+    for(let i=0;i<3;i++) s += (i<G.hearts ? "❤️" : '<span class="off">🤍</span>');
+    hEl.innerHTML = s;
+  } else hEl.innerHTML = "";
+
+  let h = '<div class="qmeta"><span>'+esc(G.name)+"</span><span>Soal "+(G.i+1)+" / "+G.qs.length+"</span></div>";
+  h += '<div class="qtext">'+fmt(q.q)+"</div>";
+  if(q.sheet) h += sheetHTML(q.sheet);
+
+  if(q.t==="mc"){
+    h += '<div class="opts" id="opts">';
+    q.o.forEach(function(o,i){
+      h += '<button class="opt" data-i="'+i+'" onclick="answerMC('+i+')"><span class="k">'+"ABCD"[i]+"</span><span>"+fmt(o)+"</span></button>";
+    });
+    h += "</div>";
+  } else {
+    h += '<div class="fill"><input id="fillIn" placeholder="Ketik jawabanmu, contoh: Ctrl+M" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" onkeydown="if(event.key===\'Enter\')answerFill()">'+
+         '<button class="btn primary" id="fillBtn" onclick="answerFill()">Periksa</button></div>';
+    h += '<div class="keys">'+KEYS.map(function(k,i){ return '<button type="button" onclick="ins('+i+')">'+esc(k)+"</button>"; }).join("")+"</div>";
+    h += '<div class="hintbox" id="hintBox">💡 '+esc(q.hint||"")+"</div>";
+  }
+  h += '<div class="fb" id="fb"></div>';
+  h += '<div class="qfoot"><span class="muted sm" id="qnote">';
+  if(q.t==="fill" && G.mode==="level" && q.hint) h += '<button class="btn mini" type="button" onclick="showHint()">💡 Petunjuk</button>';
+  h += '</span><button class="btn primary" id="nextBtn" style="display:none" onclick="nextQ()">Lanjut →</button></div>';
+  document.getElementById("qCard").innerHTML = h;
+  const fi = document.getElementById("fillIn"); if(fi) fi.focus();
+}
+
+function answerMC(i){
+  if(G.answered) return;
+  const q = G.qs[G.i];
+  const ok = (i===q.a);
+  document.querySelectorAll("#opts .opt").forEach(function(b){
+    b.disabled = true;
+    const bi = +b.dataset.i;
+    if(bi===q.a) b.classList.add("correct");
+    if(bi===i && !ok) b.classList.add("wrong");
+  });
+  grade(ok, q.o[i], q.o[q.a]);
+}
+
+function answerFill(){
+  if(G.answered) return;
+  const q = G.qs[G.i];
+  const inp = document.getElementById("fillIn");
+  const val = (inp.value||"").trim();
+  if(!val){ toast("Tulis jawabanmu dulu ya"); inp.focus(); return; }
+  const ok = fillOK(q, val);
+
+  if(!ok && G.mode==="level" && G.try===0){
+    G.try = 1; sndNo();
+    const fb = document.getElementById("fb");
+    fb.className = "fb no on";
+    fb.innerHTML = "<b>Belum tepat — coba sekali lagi</b>"+
+      (q.hint ? "💡 "+esc(q.hint) : "Periksa lagi nama fungsi, tanda kurung, titik dua, dan tanda kutipnya.")+
+      '<div class="muted sm" style="margin-top:6px">Kesempatan terakhir sebelum nyawa berkurang.</div>';
+    showHint();
+    inp.select(); inp.focus();
+    return;
+  }
+
+  inp.disabled = true;
+  document.getElementById("fillBtn").disabled = true;
+  inp.style.borderColor = ok ? "var(--acc)" : "var(--bad)";
+  grade(ok, val, q.a[0], ok && G.try===1);
+}
+
+function grade(ok, given, correct, partial){
+  const q = G.qs[G.i];
+  G.answered = true;
+  const fb = document.getElementById("fb");
+  if(ok){
+    G.right++; ST.correct++;
+    if(partial){
+      G.xp += 5;
+      fb.className = "fb ok on";
+      fb.innerHTML = "<b>✓ Benar di percobaan kedua — +5 XP</b>"+fmt(q.e);
+      G.assist = (G.assist||0) + 1;
+    } else {
+      G.streak++;
+      if(G.streak > ST.bestStreak) ST.bestStreak = G.streak;
+      const bonus = Math.min(G.streak-1,5)*2;
+      G.xp += 10 + bonus;
+      if(G.mode==="exam"){
+        fb.className = "fb ok on"; fb.innerHTML = "<b>✓ Jawaban tersimpan</b>Pembahasan akan muncul setelah ujian selesai.";
+      } else {
+        fb.className = "fb ok on";
+        fb.innerHTML = "<b>✓ Benar!"+(bonus?" +"+(10+bonus)+" XP (bonus beruntun)":" +10 XP")+"</b>"+fmt(q.e);
+      }
+    }
+    sndOk();
+  } else {
+    G.wrong++; G.streak = 0;
+    sndNo();
+    if(G.mode==="level") G.hearts--;
+    if(G.mode==="exam"){
+      fb.className = "fb on"; fb.innerHTML = "<b>Jawaban tersimpan</b>Pembahasan akan muncul setelah ujian selesai.";
+    } else {
+      fb.className = "fb no on";
+      fb.innerHTML = "<b>✗ Belum tepat — jawabannya: "+fmt(String(correct))+"</b>"+fmt(q.e);
+    }
+  }
+  G.log.push({q:q.q, given:String(given), correct:String(correct), ok:ok, e:q.e});
+
+  if(G.mode==="level"){
+    let s = "";
+    for(let i=0;i<3;i++) s += (i<G.hearts ? "❤️" : '<span class="off">🤍</span>');
+    document.getElementById("qHearts").innerHTML = s;
+    if(G.hearts<=0){ document.getElementById("qnote").textContent = "Nyawa habis…"; setTimeout(finish, 1400); return; }
+  }
+  const nb = document.getElementById("nextBtn");
+  nb.style.display = "";
+  nb.textContent = (G.i === G.qs.length-1) ? "Selesai →" : "Lanjut →";
+  nb.focus();
+}
+
+function nextQ(){
+  G.i++;
+  if(G.i >= G.qs.length){ finish(); return; }
+  drawQ();
+}
+
+/* =========================================================
+   HASIL
+   ========================================================= */
+function finish(){
+  if(G.timer) clearInterval(G.timer);
+  const total = G.qs.length;
+  const pct = Math.round(G.right/total*100);
+  let h = "";
+
+  if(G.mode==="level"){
+    const survived = G.hearts > 0;
+    const assist = G.assist||0;
+    let stars = 0;
+    if(survived) stars = (G.wrong===0) ? (assist===0 ? 3 : 2) : (G.wrong===1 ? 2 : 1);
+    if(survived){
+      ST.xp += G.xp;
+      ST.done[G.lv] = true;
+      if(stars > (ST.best[G.lv]||0)) ST.best[G.lv] = stars;
+      sndWin();
+    } else { ST.retries++; }
+    save();
+
+    const mod = LEVELS.find(function(l){ return l.id===G.lv; });
+    h += '<div style="font-size:46px">'+(survived?(stars===3?"🎉":"✅"):"💔")+"</div>";
+    h += "<h2 style=\"font-size:24px;margin-top:6px\">"+(survived?"Modul "+esc(mod.name)+" selesai!":"Nyawa habis")+"</h2>";
+    h += '<div class="starsbig">';
+    for(let i=1;i<=3;i++) h += (i<=stars?"★":'<span class="off">★</span>');
+    h += "</div>";
+    h += '<div class="big">'+G.right+"<span style=\"font-size:24px;color:var(--mut)\">/"+total+"</span></div>";
+    h += '<p class="muted" style="margin:6px 0 0">'+(survived
+      ? ("+"+G.xp+" XP diperoleh"+(assist?" · "+assist+" soal terjawab di percobaan kedua (bintang penuh butuh sekali tepat)":""))
+      : "Tidak apa-apa. Baca lagi materinya, lalu coba lagi — shortcut dan istilah melekat justru lewat pengulangan.")+"</p>";
+    if(survived && G.lv===1 && LEVELS.length>1) h += '<p style="margin:10px 0 0;font-weight:600;color:var(--acc)">🔓 Semua modul lain kini terbuka. Pilih bebas mana yang ingin kamu pelajari.</p>';
+    h += review();
+    h += '<div class="btnrow">';
+    h += '<button class="btn" onclick="startLevel('+G.lv+')">Ulangi modul ini</button>';
+    const nx = LEVELS.filter(function(l){ return !ST.done[l.id] && unlocked(l.id); })[0];
+    if(survived && nx) h += '<button class="btn primary" onclick="openLevel('+nx.id+')">Lanjut: '+esc(nx.name)+"</button>";
+    if(survived && !nx) h += '<button class="btn primary" onclick="renderHome();go(\'home\')">🎓 Buka Ujian Master</button>';
+    h += '<button class="btn" onclick="renderHome();go(\'home\')">Pilih modul lain</button></div>';
+  } else {
+    const pass = pct >= 80;
+    ST.xp += G.xp; 
+    const rec = {score:pct, right:G.right, total:total, pass:pass, date:new Date().toLocaleDateString("id-ID",{day:"numeric",month:"long",year:"numeric"})};
+    if(!ST.exam || pct > ST.exam.score || (pass && !ST.exam.pass)) ST.exam = rec;
+    save();
+    if(pass) sndWin(); else sndNo();
+
+    h += '<div style="font-size:46px">'+(pass?"🏆":"📉")+"</div>";
+    h += "<h2 style=\"font-size:24px;margin-top:6px\">"+(pass?"Selamat, kamu LULUS!":"Belum lulus")+"</h2>";
+    h += '<div class="big" style="color:'+(pass?"var(--acc)":"var(--bad)")+'">'+pct+"%</div>";
+    h += '<p class="muted" style="margin:6px 0 0">'+G.right+" dari "+total+" soal benar · batas kelulusan 80%</p>";
+    h += review();
+    h += '<div class="btnrow">';
+    if(pass) h += '<button class="btn primary big" onclick="openCert()">🎓 Ambil Sertifikat</button>';
+    h += '<button class="btn" onclick="startExam()">Ulangi ujian</button>';
+    h += '<button class="btn" onclick="renderHome();go(\'home\')">Beranda</button></div>';
+  }
+  document.getElementById("resBox").innerHTML = h;
+  renderHome();
+  go("result");
+}
+
+function review(){
+  const wrongs = G.log.filter(function(x){ return !x.ok; });
+  if(!wrongs.length) return '<p style="margin-top:20px;font-weight:600;color:var(--acc)">Sempurna — tidak ada satu pun jawaban yang meleset! 💎</p>';
+  let h = '<h3 style="text-align:left;margin-top:26px;font-size:16px">📝 Bahas yang belum tepat ('+wrongs.length+")</h3>";
+  h += '<div class="review">';
+  wrongs.forEach(function(w){
+    h += '<div class="rv"><b>'+fmt(w.q)+"</b>";
+    h += '<div>Jawabanmu: <span class="w">'+esc(w.given)+'</span> · Kunci: <span class="a">'+esc(w.correct)+"</span></div>";
+    h += '<div class="muted" style="margin-top:5px">'+fmt(w.e)+"</div></div>";
+  });
+  return h + "</div>";
+}
+
+/* =========================================================
+   SERTIFIKAT
+   ========================================================= */
+function openCert(){
+  document.getElementById("certName").value = ST.name || "";
+  go("cert");
+  if(ST.name) buildCert(); else document.getElementById("certName").focus();
+}
+
+function certId(name){
+  let s = 0, str = (name||"")+"|"+(ST.exam?ST.exam.date:"")+"|"+(ST.exam?ST.exam.score:0);
+  for(let i=0;i<str.length;i++){ s = (s*31 + str.charCodeAt(i)) >>> 0; }
+  const base = s.toString(36).toUpperCase().padStart(6,"0").slice(-6);
+  return "SM-2026-"+base;
+}
+
+function buildCert(){
+  const nm = (document.getElementById("certName").value||"").trim();
+  if(!nm){ toast("Isi nama lengkapmu dulu"); document.getElementById("certName").focus(); return; }
+  if(!ST.exam || !ST.exam.pass){ toast("Sertifikat terbuka setelah lulus ujian"); return; }
+  ST.name = nm; save();
+  const ex = ST.exam;
+  const id = certId(nm);
+  const stars = totalStars();
+  let display = nm.toUpperCase();
+  let nameSize = 58;
+  if(display.length > 22) nameSize = 44;
+  if(display.length > 30) nameSize = 34;
+
+  const svg =
+'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1123 794" role="img" aria-label="Sertifikat Master PowerPoint">'+
+'<defs>'+
+'<linearGradient id="bgg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#f2f7f3"/></linearGradient>'+
+'<linearGradient id="gold" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#b8860b"/><stop offset=".5" stop-color="#e5c065"/><stop offset="1" stop-color="#b8860b"/></linearGradient>'+
+'</defs>'+
+'<rect width="1123" height="794" fill="url(#bgg)"/>'+
+'<rect x="26" y="26" width="1071" height="742" fill="none" stroke="#8a3212" stroke-width="7"/>'+
+'<rect x="42" y="42" width="1039" height="710" fill="none" stroke="url(#gold)" stroke-width="2.5"/>'+
+/* corner ornaments */
+'<g stroke="#8a3212" stroke-width="3" fill="none">'+
+'<path d="M62 100 V62 H100"/><path d="M1061 100 V62 H1023"/><path d="M62 694 V732 H100"/><path d="M1061 694 V732 H1023"/>'+
+'</g>'+
+/* watermark fx */
+'<text x="561" y="500" text-anchor="middle" font-family="Georgia, serif" font-size="300" fill="#8a3212" opacity="0.045" font-style="italic">▶</text>'+
+/* header */
+'<text x="561" y="118" text-anchor="middle" font-family="Georgia, \'Times New Roman\', serif" font-size="17" letter-spacing="7" fill="#8a3212">S L I D E M A S T E R   A C A D E M Y</text>'+
+'<line x1="380" y1="136" x2="742" y2="136" stroke="url(#gold)" stroke-width="2"/>'+
+'<text x="561" y="196" text-anchor="middle" font-family="Georgia, \'Times New Roman\', serif" font-size="46" font-weight="bold" letter-spacing="4" fill="#6b2408">SERTIFIKAT KELULUSAN</text>'+
+'<text x="561" y="232" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="14.5" letter-spacing="4" fill="#7a6a5c">MASTER MICROSOFT POWERPOINT</text>'+
+/* body */
+'<text x="561" y="300" text-anchor="middle" font-family="Georgia, serif" font-size="19" fill="#4c5b52" font-style="italic">Dengan bangga diberikan kepada</text>'+
+'<text x="561" y="'+(300+nameSize+22)+'" text-anchor="middle" font-family="Georgia, \'Times New Roman\', serif" font-size="'+nameSize+'" font-weight="bold" fill="#8a3212">'+esc(display)+"</text>"+
+'<line x1="250" y1="'+(300+nameSize+44)+'" x2="872" y2="'+(300+nameSize+44)+'" stroke="url(#gold)" stroke-width="2"/>'+
+'<text x="561" y="462" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="16.5" fill="#5a4c42">atas keberhasilannya menuntaskan '+LEVELS.length+' modul pembelajaran desain dan presentasi PowerPoint</text>'+
+'<text x="561" y="488" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="16.5" fill="#5a4c42">dan lulus Ujian Master PowerPoint dengan nilai akhir</text>'+
+/* score block */
+'<text x="561" y="556" text-anchor="middle" font-family="Georgia, serif" font-size="54" font-weight="bold" fill="#b8860b">'+ex.score+'%</text>'+
+'<text x="561" y="582" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="13" letter-spacing="2" fill="#7a6a5c">'+ex.right+' DARI '+ex.total+' SOAL BENAR  ·  '+stars+' / '+(LEVELS.length*3)+' BINTANG  ·  '+ST.xp+' XP</text>'+
+/* seal */
+'<g transform="translate(940,585)">'+
+'<circle r="62" fill="#8a3212"/><circle r="54" fill="none" stroke="#e5c065" stroke-width="2"/>'+
+'<text y="-14" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="11" letter-spacing="2.5" fill="#e5c065">CERTIFIED</text>'+
+'<text y="10" text-anchor="middle" font-family="Georgia, serif" font-size="24" font-weight="bold" fill="#ffffff">MASTER</text>'+
+'<text y="30" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="12" letter-spacing="3" fill="#e5c065">POWERPOINT</text>'+
+'<text y="48" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="9" letter-spacing="1" fill="#e0b088">SLIDE MASTER</text>'+
+'</g>'+
+/* signature */
+'<g>'+
+'<text x="200" y="618" text-anchor="middle" font-family="Georgia, serif" font-size="26" font-style="italic" fill="#6b2408">Slide Master</text>'+
+'<line x1="90" y1="634" x2="310" y2="634" stroke="#8a998f" stroke-width="1.2"/>'+
+'<text x="200" y="654" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="12" letter-spacing="1.5" fill="#7a6a5c">Pengembang Akademi Ppt</text>'+
+'</g>'+
+/* footer meta */
+'<line x1="90" y1="700" x2="1033" y2="700" stroke="#dbe3dc" stroke-width="1"/>'+
+'<text x="90" y="724" font-family="Arial, Helvetica, sans-serif" font-size="12.5" fill="#7a6a5c">No. Sertifikat: '+id+"</text>"+
+'<text x="1033" y="724" text-anchor="end" font-family="Arial, Helvetica, sans-serif" font-size="12.5" fill="#7a6a5c">Diterbitkan: '+esc(ex.date)+"</text>"+
+'<text x="561" y="724" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="11" fill="#a89a8d">Sertifikat pembelajaran mandiri · bukan sertifikasi resmi Microsoft</text>'+
+"</svg>";
+
+  document.getElementById("certArea").innerHTML = svg;
+  sndWin();
+  toast("Sertifikat siap 🎉");
+}
+
+/* ---- unduh PNG via capability downloads ---- */
+let DL = null;
+(async function(){
+  for(let i=0;i<40 && !(window.claude && window.claude.use);i++){
+    await new Promise(function(r){ setTimeout(r,300); });
+  }
+  try{
+    if(window.claude && window.claude.use){
+      DL = await window.claude.use("downloads");
+      if(DL) document.getElementById("pngBtn").style.display = "";
+    }
+  }catch(e){}
+})();
+
+async function savePNG(){
+  const svgEl = document.querySelector("#certArea svg");
+  if(!svgEl){ toast("Buat sertifikatnya dulu"); return; }
+  if(!DL){ toast("Gunakan tombol Cetak untuk menyimpan"); return; }
+  try{
+    const src = new XMLSerializer().serializeToString(svgEl);
+    const url = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(src);
+    const img = new Image();
+    await new Promise(function(res, rej){ img.onload = res; img.onerror = rej; img.src = url; });
+    const c = document.createElement("canvas");
+    c.width = 2246; c.height = 1588;
+    const ctx = c.getContext("2d");
+    ctx.fillStyle = "#ffffff"; ctx.fillRect(0,0,c.width,c.height);
+    ctx.drawImage(img,0,0,c.width,c.height);
+    const blob = await new Promise(function(res){ c.toBlob(res,"image/png"); });
+    const fname = "Sertifikat-Master-PowerPoint-" + (ST.name||"Peserta").replace(/[^A-Za-z0-9 ]/g,"").replace(/\s+/g,"-") + ".png";
+    await DL.save({filename:fname, data:blob});
+    toast("Sertifikat tersimpan ✓");
+  }catch(err){
+    if(err && err.code === "declined") return;
+    toast("Gagal menyimpan — coba tombol Cetak");
+  }
+}
+
+/* =========================================================
+   INIT
+   ========================================================= */
+renderHome();
+</script>
+</body>
+</html>
